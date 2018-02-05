@@ -7,6 +7,8 @@ hexo init
 
 npm install hexo-asset-image --save
 
+npm install hexo-generator-feed --save
+
 hexo clean
 
 hexo generate
