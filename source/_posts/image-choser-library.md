@@ -4,8 +4,8 @@ thumbnailImagePosition: left
 thumbnailImage: cover.jpg
 coverImage: cover.jpg
 title: "图片选择控件"
-categories: [Android]
-tags: [图片,library]
+categories: [android]
+tags: [控件,图片]
 ---
 
 最近公司有一个项目需要支持手机本地图片的多选,就像微信那样的。  
