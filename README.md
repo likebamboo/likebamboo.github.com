@@ -2,7 +2,7 @@
 1. 签出`git@github.com:likebamboo/likebamboo.github.com.git`项目
 
 ```
-clone git@github.com:likebamboo/likebamboo.github.com.git
+git clone git@github.com:likebamboo/likebamboo.github.com.git
 ```
 
 2. 切换到 `dev` 分支

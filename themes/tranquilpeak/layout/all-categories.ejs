@@ -4,7 +4,7 @@
  * @param category
  * @returns {string}
  */
-function displayCategoriesAndPosts(category) {
+function displayCategoriesAndPosts(site, page, category, __, url_for) {
     // get its posts
     var posts = category.posts;
     // get its child categories
@@ -58,7 +58,7 @@ function displayCategoriesAndPosts(category) {
  * @param category
  * @returns {string}
  */
-function displayCategories(category) {
+function displayCategories(site, category) {
     // get all its child categories
     var childCategories = site.categories.find({'parent': category._id});
     // init parents
@@ -106,14 +106,14 @@ function displayCategories(category) {
         <section class="boxes">
         <% site.categories.sort('name').each(function(category) { %>
             <% if (!category.parent) { %>
-                <%- displayCategories(category) %>
+                <%- displayCategories(site, category) %>
             <% } %>
         <% }); %>
     </section>
     <section class="boxes">
         <% site.categories.sort('name').each(function(category) { %>
             <% if (!category.parent) { %>
-                    <%- displayCategoriesAndPosts(category) %>
+                    <%- displayCategoriesAndPosts(site, page, category, __, url_for) %>
             <% } %>
         <% }); %>
     </section>
