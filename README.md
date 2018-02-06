@@ -1,17 +1,34 @@
-npm install -g hexo-cli
 
-hexo init 
+1. 签出`git@github.com:likebamboo/likebamboo.github.com.git`项目
 
-// 拷贝相关文件到目标目录
+```
+clone git@github.com:likebamboo/likebamboo.github.com.git
+```
 
+2. 切换到 `dev` 分支
 
-npm install hexo-asset-image --save
+```
+git checkout -b dev origin/dev
+```
 
-npm install hexo-generator-feed --save
+3. 初始化项目
 
+```
+npm install --save
+```
+
+清理工程：
+
+```
 hexo clean
+```
 
+构建工程
+```
 hexo generate
+```
 
+启动工程
+```
 hexo server
-
+```
