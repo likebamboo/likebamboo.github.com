@@ -80,3 +80,9 @@ deploy:
   type: git
   repo: git@github.com:likebamboo/likebamboo.github.com.git
   branch: master
+
+# hexo sitemap
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
