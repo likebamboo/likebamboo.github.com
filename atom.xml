@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://likebamboo.com/"/>
-  <updated>2018-03-02T12:52:56.926Z</updated>
+  <updated>2019-01-26T16:29:12.575Z</updated>
   <id>http://likebamboo.com/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2019年书单</title>
+    <link href="http://likebamboo.com/2019/12/31/book-list-2019/"/>
+    <id>http://likebamboo.com/2019/12/31/book-list-2019/</id>
+    <published>2019-12-30T16:00:00.000Z</published>
+    <updated>2019-01-26T16:29:12.575Z</updated>
+    
+    <content type="html"><![CDATA[<!-- excerpt --></p><h3 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h3><p>…</p><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ol><li>《有话说》 (在读)</li></ol><p>…</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2019年读书书单&lt;br&gt;
+    
+    </summary>
+    
+      <category term="生活" scheme="http://likebamboo.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="读书" scheme="http://likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2018年书单</title>
+    <link href="http://likebamboo.com/2018/12/31/book-list-2018/"/>
+    <id>http://likebamboo.com/2018/12/31/book-list-2018/</id>
+    <published>2018-12-30T16:00:00.000Z</published>
+    <updated>2019-01-26T16:26:08.341Z</updated>
+    
+    <content type="html"><![CDATA[<!-- excerpt --></p><h3 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h3><ol><li><p>《算法图解》 (完成)</p></li><li><p>《图解HTTP》 (完成)</p></li><li><p>《设计模式之禅(第二版)》 (完成)</p></li></ol><p>…</p><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ol><li><p>《非暴力沟通》 (完成)</p></li><li><p>《三体》全集  (完成)</p></li><li><p>《月亮与6便士》 (完成)</p></li><li><p>《万历十五年》 (完成)</p></li><li><p>《云边有个小卖部》 (完成)</p></li><li><p>《谁杀了她》 (完成)</p></li><li><p>《百年孤独》 (完成)</p></li><li><p>《黄金时代》 (完成)</p></li><li><p>《流浪地球》 (完成)</p></li></ol><p>…</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2018年读书书单&lt;br&gt;
+    
+    </summary>
+    
+      <category term="生活" scheme="http://likebamboo.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="读书" scheme="http://likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/"/>
+    
+  </entry>
   
   <entry>
     <title>Gradle插件开发基础</title>
@@ -37,28 +81,6 @@
       <category term="gradle" scheme="http://likebamboo.com/tags/gradle/"/>
     
       <category term="插件" scheme="http://likebamboo.com/tags/%E6%8F%92%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2018年书单</title>
-    <link href="http://likebamboo.com/2018/02/10/book-list-2018/"/>
-    <id>http://likebamboo.com/2018/02/10/book-list-2018/</id>
-    <published>2018-02-09T16:00:00.000Z</published>
-    <updated>2018-08-05T10:16:48.922Z</updated>
-    
-    <content type="html"><![CDATA[<!-- excerpt --></p><h3 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h3><ol><li><p>《算法图解》 (完成)</p></li><li><p>《图解HTTP》 (完成)</p></li><li><p>《Android Gradle 权威指南》 (在读)</p></li><li><p>《设计模式之禅(第二版)》 (在读)</p></li><li><p>《数据结构与算法–使用Java语言描述》 (未读)</p></li></ol><p>…</p><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ol><li><p>《非暴力沟通》 (完成)</p></li><li><p>《三体》全集  (完成)</p></li><li><p>《月亮与6便士》 (完成)</p></li><li><p>《万历十五年》 (完成)</p></li><li><p>《云边有个小卖部》 (完成)</p></li><li><p>《今日简史》 (在读)</p></li><li><p>《蛙》 (未读)</p></li></ol><p>…</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;2018年读书书单&lt;br&gt;
-    
-    </summary>
-    
-      <category term="生活" scheme="http://likebamboo.com/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-      <category term="读书" scheme="http://likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/"/>
     
   </entry>
   
