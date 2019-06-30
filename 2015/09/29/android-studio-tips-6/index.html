@@ -345,7 +345,7 @@
     </nav>
     <ul class="post-actions post-action-share">
         <li class="post-action hide-lg hide-md hide-sm">
-            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
                 <i class="fa fa-share-alt" aria-hidden="true"></i>
             </a>
         </li>
@@ -376,16 +376,10 @@
         
         
             
-                <li class="post-action">
-                    <a class="post-action-btn btn btn--default" href="#gitment">
-                         <i class="fa fa-comment-o"></i>
-                    </a>
-                </li>
-            
         
         <li class="post-action">
             
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
             
                 <i class="fa fa-list" aria-hidden="true"></i>
             </a>
@@ -397,7 +391,7 @@
         
         
             
-                <div id="gitment"></div>
+                <div id="gitalk-container"></div>
             
         
     </div>
@@ -439,7 +433,7 @@
     </nav>
     <ul class="post-actions post-action-share">
         <li class="post-action hide-lg hide-md hide-sm">
-            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
                 <i class="fa fa-share-alt" aria-hidden="true"></i>
             </a>
         </li>
@@ -470,16 +464,10 @@
         
         
             
-                <li class="post-action">
-                    <a class="post-action-btn btn btn--default" href="#gitment">
-                         <i class="fa fa-comment-o"></i>
-                    </a>
-                </li>
-            
         
         <li class="post-action">
             
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
             
                 <i class="fa fa-list" aria-hidden="true"></i>
             </a>
@@ -566,34 +554,20 @@
 <!--SCRIPTS END-->
 
     
-        <script type="text/javascript">
-            (function() {
-                function render() {
-                    new Gitment({
-                        id: '2015-09-29_06:00:00',
-                        owner: 'likebamboo',
-                        repo: 'Gitment',
-                        oauth: {
-                            client_id: 'c4042c08604a8ccc5f6a',
-                            client_secret: '8a08b832db4c6787f314be76b22f095df7eb7254',
-                        }
-                    }).render('gitment');
-                }
-                var gc = document.createElement('script');
-                gc.type = 'text/javascript';
-                gc.src = '//imsun.github.io/gitment/dist/gitment.browser.js';
-                gc.charset = 'UTF-8';
-                gc.onload = render;
-                gc.async = true;
-                document.querySelector('body').appendChild(gc);
-                var gcs = document.createElement('link');
-                gcs.href = '//imsun.github.io/gitment/style/default.css';
-                gcs.type = 'text/css';
-                gcs.rel = 'stylesheet';
-                gcs.media = 'screen,print';
-                document.querySelector('head').appendChild(gcs);
-            })();
-	    </script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+		<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+		<script type="text/javascript">
+			var gitalk = new Gitalk({
+				  clientID: '{{ theme.gitalk.gitalk_clientID }}',
+				  clientSecret: '{{ theme.gitalk.gitalk_Secret }}',
+				  repo: '{{ theme.gitalk.gitalk_repo }}',
+				  owner: '{{ theme.gitalk.gitalk_owner }}',
+				  admin: '{{ theme.gitalk.gitalk_admin }}',
+				  id: location.pathname, // Ensure uniqueness and length less than 50{{ page.title }}
+				  distractionFreeMode: '{{ theme.gitalk.distractionFreeMode }}'  // Facebook-like distraction free mode
+				})
+				gitalk.render('gitalk-container')
+		</script>
     
 
 
