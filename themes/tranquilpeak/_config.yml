@@ -208,7 +208,9 @@ gitment:
 
 gitalk:
   enable: true
-  gitalk_repo: 'likebamboo.github.io'
+  gitalk_clientID: 'b6336850403ce274da24'
+  gitalk_Secret: 'f665e0808a622fb04c3e57b8bc8d2079347c5c7b'
+  gitalk_repo: 'likebamboo.github.com'
   gitalk_owner: 'likebamboo'
   gitalk_admin: 'likebamboo'
   distractionFreeMode: true
