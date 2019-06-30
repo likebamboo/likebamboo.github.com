@@ -196,7 +196,7 @@ disqus_shortname:
 # Read https://github.com/imsun/gitment#get-started to setup Gitment
 gitment:
     # Switch
-    enable: true
+    enable: false
     # Your Github ID (Github username):
     github_id: likebamboo
     # The repo to store comments:
@@ -206,6 +206,13 @@ gitment:
     # Your client secret:
     client_secret: 8a08b832db4c6787f314be76b22f095df7eb7254
 
+gitalk:
+  enable: true
+  gitalk_repo: 'likebamboo.github.io'
+  gitalk_owner: 'likebamboo'
+  gitalk_admin: 'likebamboo'
+  distractionFreeMode: true
+    
 # -------------------
 # Integrated services
 # -------------------
