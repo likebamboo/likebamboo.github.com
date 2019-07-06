@@ -122,7 +122,7 @@ header:
 # Your biography and your job is editable in each languages files in `languages` folder
 author:
     email: likebamboo@163.com
-    location: ShangHai
+    location: ShenZhen
     # Your profile picture located in folder `source/_images/` (development)
     # or in `source/assets/images/` (production)
     # or you can use an external url
