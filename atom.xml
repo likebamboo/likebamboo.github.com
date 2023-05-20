@@ -5,9 +5,9 @@
   <subtitle>诗意地生活</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://likebamboo.com/"/>
+  <link href="https://likebamboo.com/"/>
   <updated>2022-10-04T03:28:51.294Z</updated>
-  <id>http://likebamboo.com/</id>
+  <id>https://likebamboo.com/</id>
   
   <author>
     <name>如竹</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>2019年书单</title>
-    <link href="http://likebamboo.com/2019/12/31/book-list-2019/"/>
-    <id>http://likebamboo.com/2019/12/31/book-list-2019/</id>
+    <link href="https://likebamboo.com/2019/12/31/book-list-2019/"/>
+    <id>https://likebamboo.com/2019/12/31/book-list-2019/</id>
     <published>2019-12-30T16:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.294Z</updated>
     
@@ -31,17 +31,17 @@
     
     </summary>
     
-      <category term="生活" scheme="http://likebamboo.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="https://likebamboo.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="读书" scheme="http://likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/"/>
+      <category term="读书" scheme="https://likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/"/>
     
   </entry>
   
   <entry>
     <title>2018年书单</title>
-    <link href="http://likebamboo.com/2018/12/31/book-list-2018/"/>
-    <id>http://likebamboo.com/2018/12/31/book-list-2018/</id>
+    <link href="https://likebamboo.com/2018/12/31/book-list-2018/"/>
+    <id>https://likebamboo.com/2018/12/31/book-list-2018/</id>
     <published>2018-12-30T16:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.293Z</updated>
     
@@ -53,17 +53,17 @@
     
     </summary>
     
-      <category term="生活" scheme="http://likebamboo.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="https://likebamboo.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="读书" scheme="http://likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/"/>
+      <category term="读书" scheme="https://likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/"/>
     
   </entry>
   
   <entry>
     <title>Gradle插件开发基础</title>
-    <link href="http://likebamboo.com/2018/03/01/gradle-plugin/"/>
-    <id>http://likebamboo.com/2018/03/01/gradle-plugin/</id>
+    <link href="https://likebamboo.com/2018/03/01/gradle-plugin/"/>
+    <id>https://likebamboo.com/2018/03/01/gradle-plugin/</id>
     <published>2018-02-28T16:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.294Z</updated>
     
@@ -75,19 +75,19 @@
     
     </summary>
     
-      <category term="gradle" scheme="http://likebamboo.com/categories/gradle/"/>
+      <category term="gradle" scheme="https://likebamboo.com/categories/gradle/"/>
     
     
-      <category term="gradle" scheme="http://likebamboo.com/tags/gradle/"/>
+      <category term="gradle" scheme="https://likebamboo.com/tags/gradle/"/>
     
-      <category term="插件" scheme="http://likebamboo.com/tags/%E6%8F%92%E4%BB%B6/"/>
+      <category term="插件" scheme="https://likebamboo.com/tags/%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
   <entry>
     <title>使用动态代理实现Wifi网络下模拟3g/4g</title>
-    <link href="http://likebamboo.com/2017/08/08/android-wifi-hook/"/>
-    <id>http://likebamboo.com/2017/08/08/android-wifi-hook/</id>
+    <link href="https://likebamboo.com/2017/08/08/android-wifi-hook/"/>
+    <id>https://likebamboo.com/2017/08/08/android-wifi-hook/</id>
     <published>2017-08-07T16:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.293Z</updated>
     
@@ -99,21 +99,21 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="android" scheme="http://likebamboo.com/tags/android/"/>
+      <category term="android" scheme="https://likebamboo.com/tags/android/"/>
     
-      <category term="动态代理" scheme="http://likebamboo.com/tags/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/"/>
+      <category term="动态代理" scheme="https://likebamboo.com/tags/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/"/>
     
-      <category term="hook" scheme="http://likebamboo.com/tags/hook/"/>
+      <category term="hook" scheme="https://likebamboo.com/tags/hook/"/>
     
   </entry>
   
   <entry>
     <title>Android 主题切换实现方案探索</title>
-    <link href="http://likebamboo.com/2016/05/22/android-theme-switch/"/>
-    <id>http://likebamboo.com/2016/05/22/android-theme-switch/</id>
+    <link href="https://likebamboo.com/2016/05/22/android-theme-switch/"/>
+    <id>https://likebamboo.com/2016/05/22/android-theme-switch/</id>
     <published>2016-05-21T16:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.293Z</updated>
     
@@ -125,19 +125,19 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="android" scheme="http://likebamboo.com/tags/android/"/>
+      <category term="android" scheme="https://likebamboo.com/tags/android/"/>
     
-      <category term="主题切换" scheme="http://likebamboo.com/tags/%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2/"/>
+      <category term="主题切换" scheme="https://likebamboo.com/tags/%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2/"/>
     
   </entry>
   
   <entry>
     <title>【译】Android Studio 使用技巧系列(六)</title>
-    <link href="http://likebamboo.com/2015/09/29/android-studio-tips-6/"/>
-    <id>http://likebamboo.com/2015/09/29/android-studio-tips-6/</id>
+    <link href="https://likebamboo.com/2015/09/29/android-studio-tips-6/"/>
+    <id>https://likebamboo.com/2015/09/29/android-studio-tips-6/</id>
     <published>2015-09-29T10:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.288Z</updated>
     
@@ -149,17 +149,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="androidstuido" scheme="http://likebamboo.com/tags/androidstuido/"/>
+      <category term="androidstuido" scheme="https://likebamboo.com/tags/androidstuido/"/>
     
   </entry>
   
   <entry>
     <title>【译】Android Studio 使用技巧系列(五)</title>
-    <link href="http://likebamboo.com/2015/09/29/android-studio-tips-5/"/>
-    <id>http://likebamboo.com/2015/09/29/android-studio-tips-5/</id>
+    <link href="https://likebamboo.com/2015/09/29/android-studio-tips-5/"/>
+    <id>https://likebamboo.com/2015/09/29/android-studio-tips-5/</id>
     <published>2015-09-29T09:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.281Z</updated>
     
@@ -171,17 +171,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="androidstuido" scheme="http://likebamboo.com/tags/androidstuido/"/>
+      <category term="androidstuido" scheme="https://likebamboo.com/tags/androidstuido/"/>
     
   </entry>
   
   <entry>
     <title>【译】Android Studio 使用技巧系列(四)</title>
-    <link href="http://likebamboo.com/2015/09/29/android-studio-tips-4/"/>
-    <id>http://likebamboo.com/2015/09/29/android-studio-tips-4/</id>
+    <link href="https://likebamboo.com/2015/09/29/android-studio-tips-4/"/>
+    <id>https://likebamboo.com/2015/09/29/android-studio-tips-4/</id>
     <published>2015-09-29T08:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.275Z</updated>
     
@@ -193,17 +193,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="androidstuido" scheme="http://likebamboo.com/tags/androidstuido/"/>
+      <category term="androidstuido" scheme="https://likebamboo.com/tags/androidstuido/"/>
     
   </entry>
   
   <entry>
     <title>【译】Android Studio 使用技巧系列(三)-调试</title>
-    <link href="http://likebamboo.com/2015/09/29/android-studio-tips-3/"/>
-    <id>http://likebamboo.com/2015/09/29/android-studio-tips-3/</id>
+    <link href="https://likebamboo.com/2015/09/29/android-studio-tips-3/"/>
+    <id>https://likebamboo.com/2015/09/29/android-studio-tips-3/</id>
     <published>2015-09-29T07:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.262Z</updated>
     
@@ -215,17 +215,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="androidstuido" scheme="http://likebamboo.com/tags/androidstuido/"/>
+      <category term="androidstuido" scheme="https://likebamboo.com/tags/androidstuido/"/>
     
   </entry>
   
   <entry>
     <title>【译】Android Studio 使用技巧系列(二)-快捷键</title>
-    <link href="http://likebamboo.com/2015/09/29/android-studio-tips-2/"/>
-    <id>http://likebamboo.com/2015/09/29/android-studio-tips-2/</id>
+    <link href="https://likebamboo.com/2015/09/29/android-studio-tips-2/"/>
+    <id>https://likebamboo.com/2015/09/29/android-studio-tips-2/</id>
     <published>2015-09-29T06:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.258Z</updated>
     
@@ -237,17 +237,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="androidstuido" scheme="http://likebamboo.com/tags/androidstuido/"/>
+      <category term="androidstuido" scheme="https://likebamboo.com/tags/androidstuido/"/>
     
   </entry>
   
   <entry>
     <title>【译】Android Studio 使用技巧系列(一)-快捷键</title>
-    <link href="http://likebamboo.com/2015/09/29/android-studio-tips-1/"/>
-    <id>http://likebamboo.com/2015/09/29/android-studio-tips-1/</id>
+    <link href="https://likebamboo.com/2015/09/29/android-studio-tips-1/"/>
+    <id>https://likebamboo.com/2015/09/29/android-studio-tips-1/</id>
     <published>2015-09-29T05:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.253Z</updated>
     
@@ -259,17 +259,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="androidstuido" scheme="http://likebamboo.com/tags/androidstuido/"/>
+      <category term="androidstuido" scheme="https://likebamboo.com/tags/androidstuido/"/>
     
   </entry>
   
   <entry>
     <title>【译】Android Studio 使用技巧系列-快捷键跳转</title>
-    <link href="http://likebamboo.com/2015/09/29/android-studio-tips-0/"/>
-    <id>http://likebamboo.com/2015/09/29/android-studio-tips-0/</id>
+    <link href="https://likebamboo.com/2015/09/29/android-studio-tips-0/"/>
+    <id>https://likebamboo.com/2015/09/29/android-studio-tips-0/</id>
     <published>2015-09-29T04:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.253Z</updated>
     
@@ -281,17 +281,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="androidstuido" scheme="http://likebamboo.com/tags/androidstuido/"/>
+      <category term="androidstuido" scheme="https://likebamboo.com/tags/androidstuido/"/>
     
   </entry>
   
   <entry>
     <title>图片选择控件</title>
-    <link href="http://likebamboo.com/2014/04/28/image-choser-library/"/>
-    <id>http://likebamboo.com/2014/04/28/image-choser-library/</id>
+    <link href="https://likebamboo.com/2014/04/28/image-choser-library/"/>
+    <id>https://likebamboo.com/2014/04/28/image-choser-library/</id>
     <published>2014-04-27T16:00:00.000Z</published>
     <updated>2022-10-04T03:28:51.295Z</updated>
     
@@ -303,12 +303,12 @@
     
     </summary>
     
-      <category term="android" scheme="http://likebamboo.com/categories/android/"/>
+      <category term="android" scheme="https://likebamboo.com/categories/android/"/>
     
     
-      <category term="控件" scheme="http://likebamboo.com/tags/%E6%8E%A7%E4%BB%B6/"/>
+      <category term="控件" scheme="https://likebamboo.com/tags/%E6%8E%A7%E4%BB%B6/"/>
     
-      <category term="图片" scheme="http://likebamboo.com/tags/%E5%9B%BE%E7%89%87/"/>
+      <category term="图片" scheme="https://likebamboo.com/tags/%E5%9B%BE%E7%89%87/"/>
     
   </entry>
   
