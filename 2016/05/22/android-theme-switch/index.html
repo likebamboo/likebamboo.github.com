@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="如竹的博客">
+    <title>Android 主题切换实现方案探索 - 如竹的博客</title>
+    <meta name="author" content="如竹">
+    
+    
+        <link rel="icon" href="https://www.likebamboo.com/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="本文将探索Android APP主题切换功能的各种实现方案，并通过实例总结出各个方案的优缺点以及适应场景。">
+<meta name="keywords" content="android,主题切换">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Android 主题切换实现方案探索">
+<meta property="og:url" content="https://www.likebamboo.com/2016/05/22/android-theme-switch/index.html">
+<meta property="og:site_name" content="如竹的博客">
+<meta property="og:description" content="本文将探索Android APP主题切换功能的各种实现方案，并通过实例总结出各个方案的优缺点以及适应场景。">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-style.gif">
+<meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-zip.gif">
+<meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-resources.png">
+<meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-get-resources.png">
+<meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-apk.gif">
+<meta property="og:updated_time" content="2025-10-29T12:10:40.741Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 主题切换实现方案探索">
+<meta name="twitter:description" content="本文将探索Android APP主题切换功能的各种实现方案，并通过实例总结出各个方案的优缺点以及适应场景。">
+<meta name="twitter:image" content="http://120.24.93.248/images/pptv/theme-switch-style.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/assets/images/avatar.jpg"/>
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/2016/05/22/android-theme-switch/nature-3106213_640.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://www.likebamboo.com/2016/05/22/android-theme-switch/nature-3106213_640.jpg" />
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/2016/05/22/android-theme-switch/nature-3106213_640.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://www.likebamboo.com/2016/05/22/android-theme-switch/nature-3106213_640.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-pz4cc6y13wt2trzqa8l3n9v0yykr0sstdaheem7qj628nhjmhp9pfawvqawz.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50170589-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">如竹的博客</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">如竹</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>诗意地生活~</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/likebamboo" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:likebamboo@163.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    "
+             style="background-image:url('/2016/05/22/android-theme-switch/nature-3106213_640.jpg');"
+             data-behavior="4">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Android 主题切换实现方案探索
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-05-22T00:00:00+08:00">
+	
+		    5月 22, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/android/">android</a>
+
+
+    
+</div>
+
+    
+</div>
+            
+        </div>
+
+            <div id="main" data-behavior="4"
+                 class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <!-- excerpt --></p>
+<h3 id="0x00-背景"><a href="#0x00-背景" class="headerlink" title="0x00 背景"></a>0x00 背景</h3><p>很多应用都有更换主题的需求：新闻、阅读类应用通常需要支持白天、夜间模式切换，以便在不同时间都能提供良好的阅读体验；电商类应用需要在节假日、促销活动期间提供相应的主题以烘托活动气氛；社交娱乐类应用需要支持用户自行设置主题以满足用户个性化需要。本文将探索Android APP主题切换功能的各种实现方案，并结合聚力视频APP主题切换功能的实现过程，总结各个方案的优缺点以及适应场景。</p>
+<h3 id="0x01-使用App内置style实现主题更换"><a href="#0x01-使用App内置style实现主题更换" class="headerlink" title="0x01 使用App内置style实现主题更换"></a>0x01 使用App内置style实现主题更换</h3><p>Android 原生支持通过<code>setTheme</code>方法为任一界面单独设置主题样式。要通过这种方式实现多主题，首先需要为那些支持主题切换的元素（控件）定义相应的属性。然后在不同的主题<code>style</code>中为这些属性赋不同的值。接下来在布局文件中通过<code>?attr/**</code>的形式设置控件的属性值。最终在<code>Activity</code>中通过<code>setTheme</code>方法（该方法需要在<code>setContentView</code>方法之前调用）为当前界面设置主题。</p>
+<p>当更换主题时可以<code>finish</code>当前界面，然后改变主题使用的<code>style</code>的值，并重新启动当前界面，这时候就可以完成主题替换。</p>
+<p>改变主题时重启当前界面对用户来说不是一个好的体验，可以通过记录当前界面需要支持主题切换的控件，在切换主题时直接为这些控件设置新的属性值来规避这个问题。</p>
+<p>图1-1是一个示例程序的运行效果：</p>
+<p><img src="http://120.24.93.248/images/pptv/theme-switch-style.gif" alt="图1-1"></p>
+<blockquote>
+<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/style" target="_blank" rel="noopener">https://github.com/likebamboo/ThemeSwitch/tree/style</a></p>
+</blockquote>
+<p>通过App内置的多个style实现主题切换小结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">优点</th>
+<th style="text-align:left">简单，容易实现；Android 原生支持</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">缺点</td>
+<td style="text-align:left">主题资源只能内置，不能动态增删主题，增加了安装包的大小；必须由用户主动切换主题</td>
+</tr>
+<tr>
+<td style="text-align:left">适用场景</td>
+<td style="text-align:left">白天模式、夜间模式切换</td>
+</tr>
+<tr>
+<td style="text-align:left">典型APP</td>
+<td style="text-align:left">网易新闻、QQ浏览器、哔哩哔哩动画</td>
+</tr>
+</tbody>
+</table>
+<h3 id="0x02-通过普通zip主题包实现主题切换"><a href="#0x02-通过普通zip主题包实现主题切换" class="headerlink" title="0x02 通过普通zip主题包实现主题切换"></a>0x02 通过普通zip主题包实现主题切换</h3><p>通过加载不同的zip主题包实现主题切换，首先需要将配置文件、资源文件打包压缩为zip主题包。然后在APP中内置或在适当的时候下载该主题包。在切换主题的时候通过解析配置文件加载zip包中的资源，实时为相应控件设置新的属性值。这样便可以实现主题切换。</p>
+<p>需要注意的是，如果主题包比较大，解析、加载其中的资源文件将会是一个耗时的过程，有必要放在一个独立的线程中。另外，可能需要为不同分辨率的设备提供不同尺寸的主题包，防止低分辨率的手机在加载主题资源时出现内存溢出（<code>OOM</code>）的问题。</p>
+<p>图2-1是一个示例程序的运行效果：</p>
+<p><img src="http://120.24.93.248/images/pptv/theme-switch-zip.gif" alt="图2-1"></p>
+<blockquote>
+<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/zip" target="_blank" rel="noopener">https://github.com/likebamboo/ThemeSwitch/tree/zip</a></p>
+</blockquote>
+<p>通过普通zip主题包实现主题切换小结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">优点</th>
+<th style="text-align:left">可扩展行高，支持主题包动态下载并由后端控制主题切换时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">缺点</td>
+<td style="text-align:left">需要自己解析zip包中的资源文件；针对不同手机分辨率可能需要多个zip主题包</td>
+</tr>
+<tr>
+<td style="text-align:left">适用场景</td>
+<td style="text-align:left">少量控件的颜色或图标切换</td>
+</tr>
+<tr>
+<td style="text-align:left">典型APP</td>
+<td style="text-align:left">暂时未发现</td>
+</tr>
+</tbody>
+</table>
+<h3 id="0x03-动态加载apk主题包实现主题切换"><a href="#0x03-动态加载apk主题包实现主题切换" class="headerlink" title="0x03 动态加载apk主题包实现主题切换"></a>0x03 动态加载apk主题包实现主题切换</h3><p>方案2虽然可以实现动态的主题切换，也方便制作多套主题。但是，需要在程序中自己实现查找、解析资源的过程，切换主题耗时比较长。</p>
+<p>如果可以像使用APP内部资源一样直接通过资源id或描述符使用主题包资源，就省去了查找、解析资源的过程。调研发现，Android的资源查找、管理离不开<code>AssetManager</code>和<code>Resources</code>这两个类，APP资源的管理实际是由这两个类实现的。其中<code>Resources</code>类可以根据id来查找资源，<code>AssetManager</code>类根据文件名来查找资源。如图3-1</p>
+<p><img src="http://120.24.93.248/images/pptv/theme-switch-resources.png" alt="图3-1 来源于：http://blog.csdn.net/beyond702/article/details/49228115"></p>
+<p>而<code>AssetManager</code>恰巧可以通过<code>addAssetPath</code>方法实现对非APP内部的其他资源的管理。<br>因此，为了实现使用id或资源描述符来查找主题包中的资源，我们需要将主题资源编译打包成一个apk文件。然后，创建一个独立的<code>AssetManager</code>和<code>Resources</code>对象用于管理主题包中的资源。代码如图3-2</p>
+<p><img src="http://120.24.93.248/images/pptv/theme-switch-get-resources.png" alt="图3-2"></p>
+<p>需要注意的是，<code>addAssetPath</code>方法是Android隐藏的API，所以需要通过反射的方式调用。另外主题包中的资源id和APP内部的资源id不可能完全一样，所以使用APP内部的资源id去主题apk包中查找资源会出现找不到或找不准的情况，这时候可以通过APP内部的资源名去主题包中查找对应的资源。</p>
+<p>有了管理主题资源的<code>Resources</code>对象，在切换主题时，只要通过<code>Resources</code>对象从apk主题包中获取主题资源，并为对应的支持主题切换的控件设置相应的属性值即可。</p>
+<p>图3-3是一个示例程序的运行效果：</p>
+<p><img src="http://120.24.93.248/images/pptv/theme-switch-apk.gif" alt="图3-3"></p>
+<blockquote>
+<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/apk" target="_blank" rel="noopener">https://github.com/likebamboo/ThemeSwitch/tree/apk</a></p>
+</blockquote>
+<p>通过apk主题包实现主题切换小结：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">优点</th>
+<th style="text-align:left">针对不同手机分辨率可以加载最合适的皮肤资源，无需多个主题包；支持主题包动态下载并由后端控制主题切换时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">缺点</td>
+<td style="text-align:left">实现起来相对困难，容易出错；主题包太大时会对程序性能有一定影响</td>
+</tr>
+<tr>
+<td style="text-align:left">适用场景</td>
+<td style="text-align:left">少量控件的颜色或图标切换</td>
+</tr>
+<tr>
+<td style="text-align:left">典型APP</td>
+<td style="text-align:left">聚力视频、爱奇艺</td>
+</tr>
+</tbody>
+</table>
+<h3 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h3><p>以上就是主题切换功能常见的几种实现方案，聚力视频APP目前采用最后一种。也许还有其他的实现方案。但这些实现方案中很难说哪种最好，毕竟就技术而言，常常只有最适合的方案，而没有最好的方案。</p>
+<blockquote>
+<p>参考文章 :<br><a href="https://blog.stylingandroid.com/prism-fundamentals-part-1/" target="_blank" rel="noopener">https://blog.stylingandroid.com/prism-fundamentals-part-1/</a></p>
+</blockquote>
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/android/">android</a> <a class="tag tag--primary tag--small t-link" href="/tags/主题切换/">主题切换</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/08/08/android-wifi-hook/" data-tooltip="使用动态代理实现Wifi网络下模拟3g/4g" aria-label="上一篇: 使用动态代理实现Wifi网络下模拟3g/4g">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/09/29/android-studio-tips-6/" data-tooltip="【译】Android Studio 使用技巧系列(六)" aria-label="下一篇: 【译】Android Studio 使用技巧系列(六)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2016/05/22/android-theme-switch/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2016/05/22/android-theme-switch/&amp;title=Android 主题切换实现方案探索" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2016/05/22/android-theme-switch/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitalk-container"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2025 如竹. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/08/08/android-wifi-hook/" data-tooltip="使用动态代理实现Wifi网络下模拟3g/4g" aria-label="上一篇: 使用动态代理实现Wifi网络下模拟3g/4g">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/09/29/android-studio-tips-6/" data-tooltip="【译】Android Studio 使用技巧系列(六)" aria-label="下一篇: 【译】Android Studio 使用技巧系列(六)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2016/05/22/android-theme-switch/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2016/05/22/android-theme-switch/&amp;title=Android 主题切换实现方案探索" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2016/05/22/android-theme-switch/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2016/05/22/android-theme-switch/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2016/05/22/android-theme-switch/&amp;title=Android 主题切换实现方案探索">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2016/05/22/android-theme-switch/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">如竹</h4>
+        
+            <div id="about-card-bio"><p>诗意地生活~</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p><a href='https://srf.baidu.com' target='_blank'>百度手机输入法</a></p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-peofhqjkzcghmndknakluequy1y6owxdwpaqyju9ntl9zxnk7rdolb3rjjoj.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+		<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+		<script type="text/javascript">
+			var gitalk = new Gitalk({
+				  clientID: 'b6336850403ce274da24',
+				  clientSecret: 'f665e0808a622fb04c3e57b8bc8d2079347c5c7b',
+				  repo: 'likebamboo.github.com',
+				  owner: 'likebamboo',
+				  admin: 'likebamboo',
+				  id: '2016/05/22/android-theme-switch/', // Ensure uniqueness and length less than 50{{ page.title }}
+				  distractionFreeMode: 'true'  // Facebook-like distraction free mode
+				})
+				gitalk.render('gitalk-container')
+		</script>
+    
+
+
+
+    </body>
+</html>
