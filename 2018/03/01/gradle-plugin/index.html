@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="如竹的博客">
+    <title>Gradle插件开发基础 - 如竹的博客</title>
+    <meta name="author" content="如竹">
+    
+    
+        <link rel="icon" href="https://www.likebamboo.com/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="Gradle插件将可重复使用的构建逻辑封装起来，可用于许多不同的项目和构建。 Gradle插件就相当于jar包，里面封装了一些共有的方法以及一些自定义的task等。">
+<meta name="keywords" content="gradle,插件">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Gradle插件开发基础">
+<meta property="og:url" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/index.html">
+<meta property="og:site_name" content="如竹的博客">
+<meta property="og:description" content="Gradle插件将可重复使用的构建逻辑封装起来，可用于许多不同的项目和构建。 Gradle插件就相当于jar包，里面封装了一些共有的方法以及一些自定义的task等。">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/1519961761561.png">
+<meta property="og:image" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/1519962964535.png">
+<meta property="og:updated_time" content="2025-10-29T12:10:40.743Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gradle插件开发基础">
+<meta name="twitter:description" content="Gradle插件将可重复使用的构建逻辑封装起来，可用于许多不同的项目和构建。 Gradle插件就相当于jar包，里面封装了一些共有的方法以及一些自定义的task等。">
+<meta name="twitter:image" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/1519961761561.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/assets/images/avatar.jpg"/>
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/cyprus-3184019_640.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/cyprus-3184019_640.jpg" />
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/cyprus-3184019_640.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/cyprus-3184019_640.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-pz4cc6y13wt2trzqa8l3n9v0yykr0sstdaheem7qj628nhjmhp9pfawvqawz.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50170589-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">如竹的博客</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">如竹</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>诗意地生活~</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/likebamboo" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:likebamboo@163.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    "
+             style="background-image:url('/2018/03/01/gradle-plugin/cyprus-3184019_640.jpg');"
+             data-behavior="4">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Gradle插件开发基础
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2018-03-01T00:00:00+08:00">
+	
+		    3月 01, 2018
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/gradle/">gradle</a>
+
+
+    
+</div>
+
+    
+</div>
+            
+        </div>
+
+            <div id="main" data-behavior="4"
+                 class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <!-- excerpt --></p>
+<h3 id="Gradle插件是什么"><a href="#Gradle插件是什么" class="headerlink" title="Gradle插件是什么"></a>Gradle插件是什么</h3><p>Gradle插件将可重复使用的构建逻辑封装起来，可用于许多不同的项目和构建。 Gradle插件就相当于jar包，里面封装了一些共有的方法以及一些自定义的<code>task</code>等。</p>
+<h3 id="如何开发Gradle插件"><a href="#如何开发Gradle插件" class="headerlink" title="如何开发Gradle插件"></a>如何开发Gradle插件</h3><p>可以使用任何语言开发Gradle插件，只要最终生成字节码就行。一般常用的语言是<code>Groovy</code>、<code>Java</code>、<code>Kotlin</code>。</p>
+<p>下面以<code>Groovy</code>语言为例(IDE使用<code>Intellij Idea</code>)，介绍Gradle插件开发的流程：</p>
+<p>1, 首先需要创建一个工程，然后新建一个名为<code>my-plugin</code>的模块，模块类型选<code>Gradle</code>，语言选择<code>Groovy</code>（如果使用的是<code>Android studio</code>可以新建一个<code>Java</code>模块，然后将<code>main/java/</code>文件夹改名为<code>main/groovy</code>）<br><img src="/2018/03/01/gradle-plugin/./1519961761561.png" alt="Alt text"></p>
+<p>2, 修改<code>build.gradle</code>，增加对<code>gradle sdk</code> 和<code>groovy sdk</code>的依赖：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入groovy插件，用于编译groovy等</span></span><br><span class="line">apply plugin: <span class="string">'groovy'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    testCompile <span class="keyword">group</span>: <span class="string">'junit'</span>, name: <span class="string">'junit'</span>, version: <span class="string">'4.12'</span></span><br><span class="line">    <span class="comment">// 依赖Gradle sdk，插件开发中需要用到gradle的api</span></span><br><span class="line">    <span class="keyword">compile</span> gradleApi()</span><br><span class="line">    <span class="comment">// 依赖groovy sdk</span></span><br><span class="line">    <span class="keyword">compile</span> localGroovy()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3, 准备工作做好后就可以开始编写插件了。在<code>groovy</code>目录下新建名为<code>MyPlugin</code>的类(<strong>注意：<code>groovy</code>类文件的后缀是<code>groovy</code></strong>)<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.pptv.plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPlugin</span> <span class="keyword">implements</span> <span class="title">Plugin</span>&lt;<span class="title">Project</span>&gt; &#123;</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> apply(Project project) &#123;</span><br><span class="line">        project.tasks.create(<span class="string">"my-task"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>自定义插件必须实现<code>Plugin</code>接口，覆盖其<code>apply</code>方法，并在<code>apply</code>方法中完成该自定义插件的功能。上述代码中创建了一个名为<code>my-task</code>的<code>task</code>，但该<code>task</code>什么也不做。</p>
+<p>4, 插件写好后，要想在其他项目或模块中使用该插件，需要先发布插件。</p>
+<h3 id="发布插件"><a href="#发布插件" class="headerlink" title="发布插件"></a>发布插件</h3><p>1, 首先需要在插件模块的<code>resources</code>目录下新建<code>META-INF/gradle-plugins</code>目录，然后再在<code>gradle-plugins</code>目录下新建一个<code>properties</code>属性文件，文件名称可以任意，但最好与项目功能相关，因为之后会用到这个文件名。然后在该文件中输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation-class=com.pptv.plugin.MyPlugin</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>implementation-class</code>属性的值就是刚才新建的<code>MyPlugin</code>类的类名(带包名)。</p>
+<p>2, 在插件模块的<code>build.gradle</code>中新增<code>uploadArchives</code>节点，用于配置<strong>发布插件</strong>所需的信息：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">uploadArchives &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="comment">// 以下用于将插件发布到本地</span></span><br><span class="line">        <span class="keyword">flatDir</span> &#123;</span><br><span class="line">            name <span class="string">"localRepository"</span></span><br><span class="line">            dir <span class="string">"$&#123;getRootDir()&#125;$&#123;File.separator&#125;build"</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 以下可用于将插件发布到私有maven仓库</span></span><br><span class="line">        maven &#123;</span><br><span class="line">            url <span class="string">"http://maven.pptv.com/repositories/"</span></span><br><span class="line">            credentials &#123;</span><br><span class="line">                username <span class="string">"$&#123;props['MAVEN_REPO_USERNAME']&#125;"</span></span><br><span class="line">                password <span class="string">"$&#123;props['MAVEN_REPO_PASSWORD']&#125;"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 以下也可用于将插件发布到私有maven仓库, 且可以配置的内容更多些</span></span><br><span class="line">        <span class="comment">// apply plugin: 'maven'</span></span><br><span class="line">        <span class="comment">// mavenDeployer &#123;</span></span><br><span class="line">        <span class="comment">//     repository (url:"http://maven.pptv.com/repositories/")&#123;</span></span><br><span class="line">        <span class="comment">//         authentication (userName:"$&#123;props['MAVEN_REPO_USERNAME']&#125;", password:"$&#123;props['MAVEN_REPO_PASSWORD']&#125;")</span></span><br><span class="line">        <span class="comment">//         pom.groupId =  "$&#123;GROUP_ID&#125;"</span></span><br><span class="line">        <span class="comment">//         pom.artifactId = project.getName()</span></span><br><span class="line">        <span class="comment">//         pom.version =  "$&#123;VERSION_NAME&#125;"</span></span><br><span class="line">        <span class="comment">//     &#125;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>(完整的<code>build.gradle</code>见文章最后)<br>其中: </p>
+<ul>
+<li><code>flatDir</code>节点用于配置将插件发布到本地时，插件存放的目录(<code>dir</code>) 信息；</li>
+<li><code>maven</code> 节点用于配置将插件发布到远端maven仓库，需配置远端仓库的<code>url</code>和账号信息(<code>credentials</code>)；</li>
+<li><p>注释掉的<code>mavenDeployer</code>节点也可以用于将插件发布到maven仓库，但这个配置需要依赖maven插件(<code>apply plugin: &#39;maven&#39;</code>)。 其中注释掉的代码中<code>${GROUP_ID}</code>和<code>${VERSION_NAME}</code>的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// group id</span><br><span class="line">def GROUP_ID = &quot;com.pptv.plugin&quot;</span><br><span class="line">// 版本</span><br><span class="line">def VERSION_NAME = &quot;1.0.0&quot;</span><br><span class="line"></span><br><span class="line">group &quot;$&#123;GROUP_ID&#125;&quot;</span><br><span class="line">version &quot;$&#123;VERSION_NAME&#125;&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>具体要将插件发布到本地还是远端，可以自己选择。</p>
+</li>
+</ul>
+<h3 id="使用插件"><a href="#使用插件" class="headerlink" title="使用插件"></a>使用插件</h3><p>插件开发完成后，要在其他项目或模块中使用，需要在其他项目的根<code>build.gradle</code>中加入如下配置：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        <span class="comment">// 本地库配置</span></span><br><span class="line">        <span class="keyword">flatDir</span> &#123;</span><br><span class="line">            name <span class="string">"localRepository"</span></span><br><span class="line">            <span class="comment">// 本地插件存放的路径</span></span><br><span class="line">            dir <span class="string">"$&#123;getRootDir()&#125;$&#123;File.separator&#125;build"</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 远端库配置</span></span><br><span class="line">        maven &#123;</span><br><span class="line">            url <span class="string">"http://maven.pptv.com/repositories/"</span></span><br><span class="line">            credentials &#123;</span><br><span class="line">                username <span class="string">"$&#123;props['MAVEN_REPO_USERNAME']&#125;"</span></span><br><span class="line">                password <span class="string">"$&#123;props['MAVEN_REPO_PASSWORD']&#125;"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="comment">// 导入插件库， 格式为 -&gt; group:module:version</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">"com.pptv.plugin:my-plugin:1.0.0"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上述配置中：</p>
+<ul>
+<li><code>flatDir</code>节点的配置同<strong>发布插件</strong>的配置，指明了插件在本地存放的位置信息；</li>
+<li><code>maven</code>节点的配置同<strong>发布插件</strong>的配置，指明了远端仓库的<code>url</code>等信息；</li>
+<li><code>dependencies</code>节点的<code>classpath</code>属性的取值格式是<code>group:插件module名称:插件版本号version</code>。</li>
+</ul>
+<p>然后需要在使用插件的模块的<code>build.gradle</code>中添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;my-plugin&apos;</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>my-plugin</code>为插件模块<code>resources/META-INF/gradle-plugins</code>下<code>properties</code>文件的文件名(该名称可以和插件模块的名称不相同)。</p>
+<p>刷新下项目，在Gradle视图窗口中就可以看到自定义插件创建的 <code>my-task</code>了：<br><img src="/2018/03/01/gradle-plugin/./1519962964535.png" alt="Alt text"></p>
+<p>至此，一个简单的Gradle插件就开发完成了。</p>
+<p><strong>插件模块完整 <a href="./build.gradle">build.gradle</a></strong></p>
+<blockquote>
+<p>参考 ： <a href="https://docs.gradle.org/current/userguide/userguide_single.html#custom_plugins" target="_blank" rel="noopener">https://docs.gradle.org/current/userguide/userguide_single.html#custom_plugins</a></p>
+</blockquote>
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/gradle/">gradle</a> <a class="tag tag--primary tag--small t-link" href="/tags/插件/">插件</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/31/book-list-2018/" data-tooltip="2018年书单" aria-label="上一篇: 2018年书单">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/08/08/android-wifi-hook/" data-tooltip="使用动态代理实现Wifi网络下模拟3g/4g" aria-label="下一篇: 使用动态代理实现Wifi网络下模拟3g/4g">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2018/03/01/gradle-plugin/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2018/03/01/gradle-plugin/&amp;title=Gradle插件开发基础" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2018/03/01/gradle-plugin/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitalk-container"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2025 如竹. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/31/book-list-2018/" data-tooltip="2018年书单" aria-label="上一篇: 2018年书单">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/08/08/android-wifi-hook/" data-tooltip="使用动态代理实现Wifi网络下模拟3g/4g" aria-label="下一篇: 使用动态代理实现Wifi网络下模拟3g/4g">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2018/03/01/gradle-plugin/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2018/03/01/gradle-plugin/&amp;title=Gradle插件开发基础" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2018/03/01/gradle-plugin/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2018/03/01/gradle-plugin/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2018/03/01/gradle-plugin/&amp;title=Gradle插件开发基础">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2018/03/01/gradle-plugin/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">如竹</h4>
+        
+            <div id="about-card-bio"><p>诗意地生活~</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p><a href='https://srf.baidu.com' target='_blank'>百度手机输入法</a></p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-peofhqjkzcghmndknakluequy1y6owxdwpaqyju9ntl9zxnk7rdolb3rjjoj.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+		<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+		<script type="text/javascript">
+			var gitalk = new Gitalk({
+				  clientID: 'b6336850403ce274da24',
+				  clientSecret: 'f665e0808a622fb04c3e57b8bc8d2079347c5c7b',
+				  repo: 'likebamboo.github.com',
+				  owner: 'likebamboo',
+				  admin: 'likebamboo',
+				  id: '2018/03/01/gradle-plugin/', // Ensure uniqueness and length less than 50{{ page.title }}
+				  distractionFreeMode: 'true'  // Facebook-like distraction free mode
+				})
+				gitalk.render('gitalk-container')
+		</script>
+    
+
+
+
+    </body>
+</html>

@@ -1,0 +1,879 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="如竹的博客">
+    <title>内存问题分析方法总结 - 如竹的博客</title>
+    <meta name="author" content="如竹">
+    
+    
+        <link rel="icon" href="https://www.likebamboo.com/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="内存分析方法的一些记录与总结">
+<meta name="keywords" content="内存">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="内存问题分析方法总结">
+<meta property="og:url" content="https://www.likebamboo.com/2025/11/01/memory-analysis/index.html">
+<meta property="og:site_name" content="如竹的博客">
+<meta property="og:description" content="内存分析方法的一些记录与总结">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/dumpsys.png">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/javaheap1.png">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/shallowsize.png">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/retainedsize.png">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/instance.png">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/tu1.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/tu1.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/threads.png">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/threads2.png">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/perfetto.png">
+<meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/nativeheapdump.png">
+<meta property="og:updated_time" content="2025-11-15T04:21:48.660Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内存问题分析方法总结">
+<meta name="twitter:description" content="内存分析方法的一些记录与总结">
+<meta name="twitter:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/dumpsys.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/assets/images/avatar.jpg"/>
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/city-9082149_640.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://www.likebamboo.com/2025/11/01/memory-analysis/city-9082149_640.jpg" />
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/2025/11/01/memory-analysis/city-9082149_640.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://www.likebamboo.com/2025/11/01/memory-analysis/city-9082149_640.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-pz4cc6y13wt2trzqa8l3n9v0yykr0sstdaheem7qj628nhjmhp9pfawvqawz.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50170589-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">如竹的博客</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">如竹</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>诗意地生活~</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/likebamboo" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:likebamboo@163.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    "
+             style="background-image:url('/2025/11/01/memory-analysis/city-9082149_640.jpg');"
+             data-behavior="4">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            内存问题分析方法总结
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2025-11-01T00:00:00+08:00">
+	
+		    11月 01, 2025
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/内存分析/">内存分析</a>
+
+
+    
+</div>
+
+    
+</div>
+            
+        </div>
+
+            <div id="main" data-behavior="4"
+                 class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <!-- excerpt --></p>
+<h3 id="了解-meminfo"><a href="#了解-meminfo" class="headerlink" title="了解 meminfo"></a>了解 meminfo</h3><p>遇到内存问题时，一般首先会用 <code>adb shell dumpsys meminfo -a [进程名/包名/进程pid]</code>命令输出某个应用某个时刻的整体内存值，或通过持续调用该命令并输出以观察内存的变化（类似于 AS Profiler 中 View Live Telemetry 那样）。一般<code>dumpsys meminfo</code>命令输出如下：</p>
+<p><img src="/2025/11/01/memory-analysis/./dumpsys.png" alt><br>其中的关键指标说明：</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pss Total</td>
+<td>实际按比例计算的物理内存使用量。任何独占的内存页直接计算它的PSS值，而和其它进程共享的页则按照共享的比例计算PSS值</td>
+</tr>
+<tr>
+<td>Private dirty</td>
+<td>仅该进程独占且已修改的页。代表真正独占且无法被共享的物理内存</td>
+</tr>
+<tr>
+<td>Private clean</td>
+<td>仅该进程映射、但尚未写入的页（可被释放或重映射）</td>
+</tr>
+<tr>
+<td>SwapPss dirty</td>
+<td>表示这部分物理内存已被换出（swap out），此字段仅在设备启用 zram/swap 时有效</td>
+</tr>
+<tr>
+<td>Rss total</td>
+<td>实际驻留物理内存的页总量（包含共享）。不做分摊，比 PSS 更大</td>
+</tr>
+<tr>
+<td>Heap size</td>
+<td>逻辑堆容量（最大总共可分配空间）</td>
+</tr>
+<tr>
+<td>Heap alloc</td>
+<td>当前堆中已分配（使用）的空间</td>
+</tr>
+<tr>
+<td>Heap free</td>
+<td>堆中总的剩余空间</td>
+</tr>
+</tbody>
+</table>
+<p>各区域说明：</p>
+<table>
+<thead>
+<tr>
+<th>分类名</th>
+<th>含义</th>
+<th>说明主要用途 / 常见问题方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Native Heap</td>
+<td>C/C++ 层堆内存</td>
+<td>使用 malloc/new/calloc 等分配的内存</td>
+</tr>
+<tr>
+<td>Dalvik Heap</td>
+<td>Java 虚拟机堆（由 ART / Dalvik 管理）</td>
+<td>Java 对象（String、List、Bitmap 等）</td>
+</tr>
+<tr>
+<td>Dalvik Other</td>
+<td>Dalvik 虚拟机的其他内存</td>
+<td>Dex cache、JIT 代码、GC 元数据等</td>
+</tr>
+<tr>
+<td>Stack</td>
+<td>各线程的栈内存</td>
+<td>每个线程约 512KB～1MB，线程多会增大</td>
+</tr>
+<tr>
+<td>Ashmem</td>
+<td>通过 /dev/ashmem分配</td>
+<td>匿名共享内存</td>
+</tr>
+<tr>
+<td>Gfx dev</td>
+<td>GPU 图形设备内存</td>
+<td>OpenGL / Vulkan 缓冲、纹理、EGL surface</td>
+</tr>
+<tr>
+<td>Other dev</td>
+<td>其他设备驱动相关内存</td>
+<td>例如音频 buffer、摄像头驱动缓冲区</td>
+</tr>
+<tr>
+<td>.so mmap</td>
+<td>通过 mmap 映射的共享库</td>
+<td>C/C++ 代码段和只读数据</td>
+</tr>
+<tr>
+<td>.jar mmap</td>
+<td>通过 mmap 映射的 jar 文件</td>
+<td>一般为 framework.jar 等</td>
+</tr>
+<tr>
+<td>.apk mmap</td>
+<td>通过 mmap 映射的 apk 文件</td>
+<td>资源访问（图片、xml、assets）</td>
+</tr>
+<tr>
+<td>.ttf mmap</td>
+<td>字体文件映射</td>
+<td>字体缓存，少量常驻</td>
+</tr>
+<tr>
+<td>.dex mmap</td>
+<td>Dex 文件映射</td>
+<td>ClassLoader 加载 dex 内存</td>
+</tr>
+<tr>
+<td>.oat mmap</td>
+<td>OAT 文件映射</td>
+<td>运行时优化代码，常为只读</td>
+</tr>
+<tr>
+<td>.art mmap</td>
+<td>ART 虚拟机自身映射</td>
+<td>ART runtime metadata</td>
+</tr>
+<tr>
+<td>Other mmap</td>
+<td>其他无法归类的 mmap 区域</td>
+<td>一般是内存缓存或中间层分配</td>
+</tr>
+<tr>
+<td>EGL mtrack</td>
+<td>EGL 映射跟踪</td>
+<td>GPU 图形缓冲区</td>
+</tr>
+<tr>
+<td>GL mtrack</td>
+<td>OpenGL 内存跟踪</td>
+<td>GL 纹理、FrameBuffer、Shader cache</td>
+</tr>
+<tr>
+<td>Unknown</td>
+<td>未能分类的内存区域</td>
+<td>可能是匿名 mmap、Binder、临时区域</td>
+</tr>
+</tbody>
+</table>
+<p>app Summary 各个项目的计算规则：</p>
+<table>
+<thead>
+<tr>
+<th>类别名</th>
+<th>内存构成（计算规则）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java Heap</td>
+<td>Dalvik Heap 的 Private Dirty  + .art mmap 的 Private Dirty  +  .art mmap 的 Private Clean</td>
+</tr>
+<tr>
+<td>Native Heap</td>
+<td>Native Heap 的 Private Dirty</td>
+</tr>
+<tr>
+<td>Code</td>
+<td>.so mmap.jar mmap.apk mmap.ttf mmap.dex mmap.oat mmap.ZygoteJIT.AppJIT上述 8 项的 Private Dirty + Private Clean 总和</td>
+</tr>
+<tr>
+<td>Stack</td>
+<td>Stack 的 Private Dirty</td>
+</tr>
+<tr>
+<td>Graphics</td>
+<td>Gfx devEGL mtrackGL mtrack上述 3 项的 Private Dirty + Private Clean 总和</td>
+</tr>
+<tr>
+<td>Private Other</td>
+<td>Total Private Dirty + Total Private Clean - Summary Java heap  - Summary Native Heap - Summary Code - Summary Stack -Summary Graphics</td>
+</tr>
+<tr>
+<td>System</td>
+<td>Total Pss - Total Private Dirty - Total Private Clean</td>
+</tr>
+<tr>
+<td>TOTAL PSS</td>
+<td>Summary Java Heap + Summary Native Heap + Summary Code + Summary Stack + Summary Graphics +  Summary Private Other + Summary System也等于 Native Heap 、Dalvik Heap、Dalvik Other、Stack、Ashmem、Gfx dev、Other dev、.so mmap、.jar mmap、.apk mmap、.ttf mmap、.dex mmap、.oat mmap、.art mmap、Other mmap、EGL mtrack、GL mtrack、Unknown 的 Pss Total 和 SwapPss Dirty 之和</td>
+</tr>
+<tr>
+<td>TOTAL SWAP PSS</td>
+<td>Native Heap 、Dalvik Heap、Dalvik Other、Stack、Ashmem、Gfx dev、Other dev、.so mmap、.jar mmap、.apk mmap、.ttf mmap、.dex mmap、.oat mmap、.art mmap、Other mmap、EGL mtrack、GL mtrack、Unknown 的 SwapPss Dirty 之和</td>
+</tr>
+</tbody>
+</table>
+<p>另外，也可以通过<code>dumpsys meminfo</code>的输出关注 Views、AppContexts、Activities 的数量，以判断是否有内存泄漏。</p>
+<p>如果发现 <code>meminfo</code> 中输出的 Views 、Activities 异常增多时，需要关注是不是出现了 View 、Activities 的泄漏。</p>
+<h3 id="分析引用库"><a href="#分析引用库" class="headerlink" title="分析引用库"></a>分析引用库</h3><p>在分析App不同版本的内存差异的时候，如果遇到 Code 段内存变化较大，可能是因为新版本引入了新的三方库，导致 dex 大小增加，进而导致在运行时的 Code 段内存增大（.dex mmap 或 .oat mmap 增加）。</p>
+<p>这时候可以对比前后版本引用的库有哪些差异，以此作为依据，方便后续分析具体是哪些功能模块导致的 Code 段内存增加：</p>
+<ol>
+<li>通过 <code>gradlew app:dependencies --configuration releaseCompileClasspath</code> 获取 release 版引用的三方库列表</li>
+<li>通过脚本将上一步的输出整理为表格，便于分析</li>
+<li>根据结果可以大致知道新增了哪些三方库，dex文件增加大概是哪些三方库导致的</li>
+<li>也可以通过分析哪些三方库是非必须的（这需要对业务比较了解）</li>
+</ol>
+<p>引用库对比在包大小分析中也很有用</p>
+<h3 id="分析-java-heap"><a href="#分析-java-heap" class="headerlink" title="分析 java heap"></a>分析 java heap</h3><p>debuggable 的应用 (release 包可以通过在manifest中设置 debuggable = true) 可以通过Android Studio Profiler 工具 dump java heap。 </p>
+<p>如果是 root 过的手机，可以通过如下命令来 dump java heap。这种方式方便在执行自动化脚本的时候自动导出 java 堆。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> pid 为进程id, 最后一个参数为dump转储文件存放在手机上的路径，一般可以写shell有权限写的路径。</span><br><span class="line">adb shell am dumpheap [pid] /data/local/tmp/xxx.hprof</span><br><span class="line"><span class="meta">#</span> 执行完上述命令后，可以通过 adb pull 命令将手机上的 dump 文件传到电脑上</span><br><span class="line">adb pull /data/local/tmp/xxx.hprof ~/xxx.hprof</span><br></pre></td></tr></table></figure>
+<p>针对 release 包导出的 java heap 转储文件，大多数类都会被混淆：</p>
+<p>可以借助 <a href="https://github.com/square/leakcanary/tree/main/shark" target="_blank" rel="noopener">leakcanary-shark</a> 来解析 hprof 文件。同时，可以通过传入 mapping 文件，将对应的类、方法等名称还原：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hprofFile 为 java heap 转储文件</span></span><br><span class="line">Hprof.<span class="keyword">open</span>(hprofFile).use &#123; hprof -&gt;</span><br><span class="line">    <span class="comment">// mapping 为release 包对应的 mapping 文件</span></span><br><span class="line">    <span class="keyword">val</span> graph = HprofHeapGraph.indexHprof(hprof, ProguardMappingReader(File(mapping).inputStream()).readProguardMapping())</span><br><span class="line">    <span class="comment">// 之后就可以使用 graph 的相关 api 查询的 java 对象实例个数等信息,</span></span><br><span class="line">    <span class="comment">// 具体可参考: https://github.com/square/leakcanary/blob/main/shark/shark-graph/src/main/java/shark/HeapGraph.kt</span></span><br><span class="line">    graph.classes.forEach &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <a href="https://github.com/square/leakcanary/tree/main/shark" target="_blank" rel="noopener">leakcanary-shark</a> 还可以做很多分析：</p>
+<ol>
+<li><p>开机内存分析：开机之后 dump java 堆，然后使用 <a href="https://github.com/square/leakcanary/tree/main/shark" target="_blank" rel="noopener">leakcanary-shark</a> 分析开机时加载了哪些类，对应类加载了多少个实例。</p>
+</li>
+<li><p>View、Activity 等对象泄漏分析：前面提到 <code>meminfo</code> 会输出当前应用的 View、Activity 个数，使用 Java heap ，借助 <a href="https://github.com/square/leakcanary/tree/main/shark" target="_blank" rel="noopener">leakcanary-shark</a> 可以方便输出 View、Activity 的个数以及其到 GC Root 引用链（借助<code>findShortestPathsFromGcRoots</code>），或者分析某些对象是否是泄漏的对象：</p>
+</li>
+</ol>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Marks any instance of com.example.ThingWithLifecycle with</span></span><br><span class="line"><span class="comment">// ThingWithLifecycle.destroyed=true as leaking</span></span><br><span class="line"><span class="keyword">val</span> leakingObjectFilter =</span><br><span class="line">  <span class="keyword">object</span> : LeakingObjectFilter &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">isLeakingObject</span><span class="params">(heapObject: <span class="type">HeapObject</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">if</span> (</span><br><span class="line">        heapObject <span class="keyword">is</span> HeapInstance &amp;&amp; heapObject instanceOf <span class="string">"com.example.ThingWithLifecycle"</span></span><br><span class="line">      ) &#123;</span><br><span class="line">        <span class="keyword">val</span> destroyedField = heapObject[<span class="string">"com.example.ThingWithLifecycle"</span>, <span class="string">"destroyed"</span>]!!</span><br><span class="line">        destroyedField.value.asBoolean!!</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> leakingObjectFinder = FilteringLeakingObjectFinder(listOf(leakingObjectFilter))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">(args: <span class="type">Array</span>&lt;<span class="type">String</span>&gt;)</span></span> &#123;</span><br><span class="line">  <span class="keyword">val</span> heapDumpFile = File(args[<span class="number">0</span>])</span><br><span class="line">  <span class="keyword">val</span> heapAnalysis =</span><br><span class="line">    Hprof.<span class="keyword">open</span>(heapDumpFile).use &#123; hprof -&gt;</span><br><span class="line">      <span class="keyword">val</span> heapGraph = HprofHeapGraph.indexHprof(hprof)</span><br><span class="line">      <span class="keyword">val</span> heapAnalyzer = HeapAnalyzer(&#123;&#125;)</span><br><span class="line">      heapAnalyzer.analyze(</span><br><span class="line">        heapDumpFile = heapDumpFile,</span><br><span class="line">        graph = heapGraph,</span><br><span class="line">        leakingObjectFinder = leakingObjectFinder,</span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">  println(heapAnalysis)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，直接借助 Android Studio 也可以分析 java heap 转储文件：一般关注 <strong>Allocations、Shallow size、Retained size、Native size、Depth</strong> 这些属性：</p>
+<p><img src="/2025/11/01/memory-analysis/./javaheap1.png" alt><br>这些属性的意义：</p>
+<p><strong>Allocations：</strong> 只在类级别有。表示当前类有多少个存活的实例（对象）。</p>
+<p><strong>Shallow size：</strong> 类级别和实例级别都有，且：</p>
+<ul>
+<li>类级别的 Shallow size 为某个类的所有实例的 Shallow size 之和。</li>
+<li>实例级别的 Shallow size 为单个实例本身占用内存的大小。计算规则：当前对象所有非静态属性（包括从父类继承的属性）所占用的字节数总和。以一个Bitmap对象举例，其 Shallow size 为 62：</li>
+</ul>
+<p><img src="/2025/11/01/memory-analysis/./shallowsize.png" alt></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>内存</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shadow$<em>klass</em></td>
+<td>Class&lt;?&gt;（引用类型）</td>
+<td>4</td>
+<td>Android java.lang.Object 类特有的属性</td>
+</tr>
+<tr>
+<td>shadow$<em>monitor</em></td>
+<td>int</td>
+<td>4</td>
+<td>Android java.lang.Object 类特有的属性</td>
+</tr>
+<tr>
+<td>mBitmapExt、mNinePatchChunk、mNinePatchInsets、mHardwareBuffer、mColorSpace、mGainmap</td>
+<td>引用类型</td>
+<td>6 * 4 = 24</td>
+<td>非值类型（引用类型）的属性都是占用 4 字节</td>
+</tr>
+<tr>
+<td>mId、mNativePtr</td>
+<td>long</td>
+<td>8 * 2 = 16</td>
+<td>int,float 占4字节，long,double 占8字节，short,char占2个字节, byte,boolean 占1字节</td>
+</tr>
+<tr>
+<td>mDensity、mHeight、mWidth</td>
+<td>int</td>
+<td>4 * 3 = 12</td>
+<td></td>
+</tr>
+<tr>
+<td>mRecycled、mRequestPremultiplied</td>
+<td>boolean</td>
+<td>1 * 2 = 2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Retained size：</strong> 类级别和实例级别都有，且：</p>
+<p><strong>类级别的</strong> Retained size 是指该类的 Class 对象的 Retained size， 注意，它并不等于某个类的所有实例的 Retained size 之和。<strong>仍然以 Bitmap 举例：</strong></p>
+<p><img src="/2025/11/01/memory-analysis/./retainedsize.png" alt></p>
+<p>上图中类级别 Bitmap 的 Retained size 是 783。它等于对应的 Class 实例的 Retained size（可以选中某个Bitmap实例后，在其<code>shadow$_klass_</code>属性上右键-&gt;<code>Go to Instance</code>找到对应的 Class 实例 ）：</p>
+<p><img src="/2025/11/01/memory-analysis/./instance.png" alt></p>
+<ul>
+<li>而实例级别的 <strong>Retained size</strong> 则表示单个对象被GC时所能回收到内存的总和，他的值总是 &gt;= 单个实例的 Shallow size。举个例子：</li>
+</ul>
+<p><img src="/2025/11/01/memory-analysis/./tu1.gif" alt="图1" title="图1"><br><img src="/2025/11/01/memory-analysis/./tu1.gif" alt="图2" title="图2"></p>
+<p>上面 2 个图中蓝色节点代表仅仅只有通过 obj1 才能直接或间接访问的对象。第一个图的 obj3 不是蓝色节点，因为其可以通过 GC Roots 访问。所以对于第一个图，obj1 的 retained size 是 obj1、obj2、obj4 的 shallow size 总和；第二个图的 retained size 是 obj1、obj2、obj3、obj4 的 shallow size 总和。obj2 的 retained size 可以通过相同的方式计算。</p>
+<p><strong>Native size：</strong> 类级别和实例级别都有，实例级别的表示单个对象所引用的 native 内存大小。类级别则是所有实例引用的 native 内存总和。</p>
+<p><strong>Depth</strong>： 从任意 GC Root 到选定实例的最短路径的深度，为 0 则表示可以作为GC Root, 为 1 则被 GC root 直接应用，以次类推。</p>
+<p>在使用 Android Studio 对 java heap 进行分析时：</p>
+<ol>
+<li>Allocations 数比较大，且非 JDK 相关的对象需要关注。</li>
+<li>Allocations 少但 Shallow size 比较大的对象，说明是大对象，需要重点关注。</li>
+<li>Native Size 比较大的对象（一般为Bitmap），也需要重点关注</li>
+</ol>
+<h3 id="分析-smpas"><a href="#分析-smpas" class="headerlink" title="分析 smpas"></a>分析 smpas</h3><p>当要分析 .xxx mmap 等占用内存较多或者想要再具体了解 Native heap 、Java heap 内存都是那些模块占用了的时候，smaps 就比较有用。</p>
+<p>可以通过如下命令抓取 smaps，前提是手机需要root：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> pid 为进程id</span><br><span class="line">adb shell cat /proc/$pid/smaps &gt; ./smaps.log</span><br></pre></td></tr></table></figure>
+<p>关于 smaps 文件结构的解读，可以参考这个文档：<a href="https://github.com/Gracker/Android-App-Memory-Analysis/blob/master/docs/zh/smaps_interpretation_guide.md" target="_blank" rel="noopener">https://github.com/Gracker/Android-App-Memory-Analysis/blob/master/docs/zh/smaps_interpretation_guide.md</a></p>
+<p>抓取之后可以通过 <a href="https://github.com/Gracker/Android-App-Memory-Analysis/blob/master/tools/smaps_parser.py" target="_blank" rel="noopener">smaps_parser.py</a> 格式化输出，格式如下（原输出太长，有删减）：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">Dalvik (Dalvik虚拟机运行时内存) : <span class="number">45.765</span> MB</span><br><span class="line">    PSS: <span class="number">45.765</span> MB</span><br><span class="line">        [anon:dalvik-main space (region space)] : <span class="number">34712</span> kB</span><br><span class="line">        [anon:dalvik-free list large <span class="keyword">object</span> space] : <span class="number">5211</span> kB</span><br><span class="line">        [anon:dalvik-non moving space] : <span class="number">4956</span> kB</span><br><span class="line">        [anon:dalvik-zygote space] : <span class="number">886</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.052</span> MB</span><br><span class="line">        [anon:dalvik-zygote space] : <span class="number">42</span> kB</span><br><span class="line">        [anon:dalvik-free list large <span class="keyword">object</span> space] : <span class="number">10</span> kB</span><br><span class="line"></span><br><span class="line">Dalvik Other (Dalvik虚拟机额外内存) : <span class="number">15.952</span> MB</span><br><span class="line">    PSS: <span class="number">15.952</span> MB</span><br><span class="line">        [anon:dalvik-LinearAlloc] : <span class="number">15196</span> kB</span><br><span class="line">        [anon:dalvik-region space live bitmap] : <span class="number">304</span> kB</span><br><span class="line">        [anon:dalvik-local ref table] : <span class="number">156</span> kB</span><br><span class="line">        [anon:dalvik-allocspace non moving space live-bitmap <span class="number">1</span>] : <span class="number">20</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">Stack (线程栈内存) : <span class="number">11.092</span> MB</span><br><span class="line">    PSS: <span class="number">11.092</span> MB</span><br><span class="line">        [anon:stack_and_tls:<span class="number">14216</span>] : <span class="number">228</span> kB</span><br><span class="line">        [stack] : <span class="number">164</span> kB</span><br><span class="line">        [anon:stack_and_tls:<span class="number">14909</span>] : <span class="number">136</span> kB</span><br><span class="line">        [anon:stack_and_tls:<span class="number">14908</span>] : <span class="number">136</span> kB</span><br><span class="line">        [anon:stack_and_tls:<span class="number">15051</span>] : <span class="number">132</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">Ashmem (匿名共享内存) : <span class="number">0.174</span> MB</span><br><span class="line">    PSS: <span class="number">0.174</span> MB</span><br><span class="line">        /dev/ashmem/shared_memory/<span class="number">9972</span>DCF27EAD19B1851F16B6AC616BED (deleted) : <span class="number">128</span> kB</span><br><span class="line">        /dev/ashmem/shared_memory/<span class="number">76</span>DA17E14D90B7C2CCCFA8ADCF6E788F (deleted) : <span class="number">32</span> kB</span><br><span class="line">        /dev/ashmem/fontMap (deleted) : <span class="number">12</span> kB</span><br><span class="line">        /dev/ashmem/GFXStats-<span class="number">14123</span> (deleted) : <span class="number">2</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">Other dev (其他设备内存) : <span class="number">0.105</span> MB</span><br><span class="line">    PSS: <span class="number">0.105</span> MB</span><br><span class="line">        /dev/binderfs/binder : <span class="number">64</span> kB</span><br><span class="line">        /dev/zero (deleted) : <span class="number">32</span> kB</span><br><span class="line">        /dev/binderfs/hwbinder : <span class="number">8</span> kB</span><br><span class="line">        /dev/__properties__/u:object_r:agp_support_anim_pause_render:s0 : <span class="number">1</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">.so mmap (动态链接库映射内存) : <span class="number">9.248</span> MB</span><br><span class="line">    PSS: <span class="number">9.248</span> MB</span><br><span class="line">        /vendor/lib64/libllvm-qgl.so : <span class="number">1518</span> kB</span><br><span class="line">        /system/lib64/libhwui.so : <span class="number">531</span> kB</span><br><span class="line">        /vendor/lib64/egl/libGLESv2_adreno.so : <span class="number">333</span> kB</span><br><span class="line">        /system/lib64/libandroid_runtime.so : <span class="number">139</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.001</span> MB</span><br><span class="line">        /system/lib64/libagp.so : <span class="number">1</span> kB</span><br><span class="line"></span><br><span class="line">.jar mmap (JAR文件映射内存) : <span class="number">2.175</span> MB</span><br><span class="line">    PSS: <span class="number">2.175</span> MB</span><br><span class="line">        /system/framework/framework.jar : <span class="number">1729</span> kB</span><br><span class="line">        /system/framework/framework-magic.jar : <span class="number">203</span> kB</span><br><span class="line">        /system/framework/ims-common.jar : <span class="number">8</span> kB</span><br><span class="line">        /system/framework/hwcustTelephony-common.jar : <span class="number">8</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">.apk mmap (APK文件映射内存) : <span class="number">129.413</span> MB</span><br><span class="line">    PSS: <span class="number">129.413</span> MB</span><br><span class="line">        /<span class="keyword">data</span>/app/~~xxxxx==/com.xxxx.xxxx-xxxx==/base.apk : <span class="number">109293</span> kB</span><br><span class="line">        /product/app/WebViewGoogle/WebViewGoogle.apk : <span class="number">19127</span> kB</span><br><span class="line">        /system/framework/framework-res-hnext.apk : <span class="number">122</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">.ttf mmap (字体文件映射内存) : <span class="number">9.257</span> MB</span><br><span class="line">    PSS: <span class="number">9.257</span> MB</span><br><span class="line">        /system/fonts/HONORSansVFCN.ttf : <span class="number">7376</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">.dex mmap (DEX字节码文件映射内存) : <span class="number">5.195</span> MB</span><br><span class="line">    PSS: <span class="number">5.195</span> MB</span><br><span class="line">        /<span class="keyword">data</span>/dalvik-cache/arm64/<span class="symbol">product@</span><span class="symbol">app@</span><span class="symbol">WebViewGoogle@</span>WebViewGoogle.<span class="symbol">apk@</span>classes.vdex : <span class="number">1225</span> kB</span><br><span class="line">        /<span class="keyword">data</span>/dalvik-cache/arm64/<span class="symbol">product@</span><span class="symbol">app@</span><span class="symbol">WebViewGoogle@</span>WebViewGoogle.<span class="symbol">apk@</span>classes.dex : <span class="number">121</span> kB</span><br><span class="line">        [anon:dalvik-/system/framework/framework.jar-classes3.dex-transformed] : <span class="number">20</span> kB</span><br><span class="line">        /memfd:/system/framework/arm64/boot.vdex (deleted) : <span class="number">17</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">.oat mmap (编译后的安卓应用程序映射内存) : <span class="number">0.018</span> MB</span><br><span class="line">    PSS: <span class="number">0.018</span> MB</span><br><span class="line">        /memfd:/system/framework/arm64/boot.oat (deleted) : <span class="number">18</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.000</span> MB</span><br><span class="line"></span><br><span class="line">.art mmap (ART运行时文件映射内存) : <span class="number">7.728</span> MB</span><br><span class="line">    PSS: <span class="number">7.728</span> MB</span><br><span class="line">        /memfd:/boot-image-methods.art (deleted) : <span class="number">6577</span> kB</span><br><span class="line">        [anon:dalvik-/system/framework/boot.art] : <span class="number">1146</span> kB</span><br><span class="line">        /memfd:/system/framework/arm64/boot.art (deleted) : <span class="number">5</span> kB</span><br><span class="line">    SwapPSS: <span class="number">0.026</span> MB</span><br><span class="line">        [anon:dalvik-/system/framework/boot.art] : <span class="number">26</span> kB</span><br></pre></td></tr></table></figure>
+<p>针对 .xxx mmap 这类映射内存，smaps 可以很清晰地看出是哪些文件映射的内存，有多大。但是对于 java heap 尤其是 native heap 使用 smaps 就比较难分析了。</p>
+<h3 id="分析线程快照"><a href="#分析线程快照" class="headerlink" title="分析线程快照"></a>分析线程快照</h3><p>debuggable 的应用可以通过 Android Studio 的 debug 工具 dump 当前应用的线程快照。但是这个只能导出 java 的线程。如果是纯 native 的线程则没法用这种方式导出</p>
+<p><img src="/2025/11/01/memory-analysis/./threads.png" alt><br>Android Studio profiler 工具在查看实时内存信息的时候也会显示当前应用的线程数量，但是没法展示当前的所有线程的快照</p>
+<p><img src="/2025/11/01/memory-analysis/./threads2.png" alt><br>root 的手机可以通过如下命令 dump 当前应用的所有线程快照（包括 native 线程）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> pid 表示应用的进程id</span><br><span class="line">adb shell debuggerd -b $PID &gt; .threads_dump.log</span><br></pre></td></tr></table></figure>
+<p>输出内容如下（节选）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">"u.input_hihonor" sysTid=11298</span><br><span class="line">    #00 pc 00000000000c1188  /apex/com.android.runtime/lib64/bionic/libc.so (__epoll_pwait+8) (BuildId: 3a5961502c37ecb11e3ee0defe2600bb)</span><br><span class="line">    #01 pc 0000000000011f7c  /system/lib64/libutils.so (android::Looper::pollOnce(int, int*, int*, void**)+212) (BuildId: ca44f7bb04e1ac79b71c5ff2900fb995)</span><br><span class="line">    #02 pc 00000000001be784  /system/lib64/libandroid_runtime.so (android::android_os_MessageQueue_nativePollOnce(_JNIEnv*, _jobject*, long, int)+44) (BuildId: cf508d4b956d9fcaf87dad152decb09b)</span><br><span class="line">    #03 pc 0000000000399170  /apex/com.android.art/lib64/libart.so (art_quick_generic_jni_trampoline+144) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #04 pc 0000000002038cc4  /memfd:jit-zygote-cache (deleted) (offset 0x2000000) (android.os.MessageQueue.next+292)</span><br><span class="line">    #05 pc 00000000028f4f84  /memfd:jit-zygote-cache (deleted) (offset 0x2000000) (android.os.Looper.loopOnce+100)</span><br><span class="line">    #06 pc 000000000205ed7c  /memfd:jit-zygote-cache (deleted) (offset 0x2000000) (android.os.Looper.loop+284)</span><br><span class="line">    #07 pc 000000000253670c  /memfd:jit-zygote-cache (deleted) (offset 0x2000000) (android.app.ActivityThread.main+3852)</span><br><span class="line">    #08 pc 0000000000382c40  /apex/com.android.art/lib64/libart.so (art_quick_invoke_static_stub+640) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #09 pc 000000000037e684  /apex/com.android.art/lib64/libart.so (_jobject* art::InvokeMethod&lt;(art::PointerSize)8&gt;(art::ScopedObjectAccessAlreadyRunnable const&amp;, _jobject*, _jobject*, _jobject*, unsigned long)+732) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #10 pc 00000000006b4bc8  /apex/com.android.art/lib64/libart.so (art::Method_invoke(_JNIEnv*, _jobject*, _jobject*, _jobjectArray*) (.__uniq.165753521025965369065708152063621506277)+32) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #11 pc 0000000000399170  /apex/com.android.art/lib64/libart.so (art_quick_generic_jni_trampoline+144) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #12 pc 0000000002ce0464  /memfd:jit-zygote-cache (deleted) (offset 0x2000000) (com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run+132)</span><br><span class="line">    #13 pc 0000000000760444  /apex/com.android.art/lib64/libart.so (nterp_helper+7636) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #14 pc 00000000002eb676  /system/framework/framework.jar (com.android.internal.os.ZygoteInit.main+690)</span><br><span class="line"></span><br><span class="line">"Jit thread pool" sysTid=11308</span><br><span class="line">    #00 pc 0000000000083cbc  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+28) (BuildId: 3a5961502c37ecb11e3ee0defe2600bb)</span><br><span class="line">    #01 pc 0000000000266780  /apex/com.android.art/lib64/libart.so (art::ConditionVariable::WaitHoldingLocks(art::Thread*)+152) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #02 pc 00000000006592cc  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Run()+208) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #03 pc 00000000004d9298  /apex/com.android.art/lib64/libart.so (art::ThreadPoolWorker::Callback(void*)+164) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #04 pc 000000000006eafc  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+196) (BuildId: 3a5961502c37ecb11e3ee0defe2600bb)</span><br><span class="line">    #05 pc 0000000000061664  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+64) (BuildId: 3a5961502c37ecb11e3ee0defe2600bb)</span><br><span class="line"></span><br><span class="line">"HeapTaskDaemon" sysTid=11309</span><br><span class="line">    #00 pc 0000000000083cbc  /apex/com.android.runtime/lib64/bionic/libc.so (syscall+28) (BuildId: 3a5961502c37ecb11e3ee0defe2600bb)</span><br><span class="line">    #01 pc 0000000000266780  /apex/com.android.art/lib64/libart.so (art::ConditionVariable::WaitHoldingLocks(art::Thread*)+152) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #02 pc 00000000003123c0  /apex/com.android.art/lib64/libart.so (art::gc::TaskProcessor::RunAllTasks(art::Thread*)+912) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #03 pc 0000000000399170  /apex/com.android.art/lib64/libart.so (art_quick_generic_jni_trampoline+144) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #04 pc 0000000002406b80  /memfd:jit-zygote-cache (deleted) (offset 0x2000000) (java.lang.Daemons$HeapTaskDaemon.runInternal+192)</span><br><span class="line">    #05 pc 000000000240408c  /memfd:jit-zygote-cache (deleted) (offset 0x2000000) (java.lang.Daemons$Daemon.run+124)</span><br><span class="line">    #06 pc 000000000211960c  /memfd:jit-zygote-cache (deleted) (offset 0x2000000) (java.lang.Thread.run+76)</span><br><span class="line">    #07 pc 0000000000382974  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #08 pc 000000000036986c  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+132) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #09 pc 000000000093fac8  /apex/com.android.art/lib64/libart.so (art::detail::ShortyTraits&lt;(char)86&gt;::Type art::ArtMethod::InvokeInstance&lt;(char)86&gt;(art::Thread*, art::ObjPtr&lt;art::mirror::Object&gt;, art::detail::ShortyTraits&lt;&gt;::Type...)+60) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #10 pc 00000000004cf6ec  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1604) (BuildId: eb9d19ca5eb7e6238e0a904aee97c2d7)</span><br><span class="line">    #11 pc 000000000006eafc  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+196) (BuildId: 3a5961502c37ecb11e3ee0defe2600bb)</span><br><span class="line">    #12 pc 0000000000061664  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+64) (BuildId: 3a5961502c37ecb11e3ee0defe2600bb)</span><br></pre></td></tr></table></figure>
+<p>通过线程快照可以用于分析当前应用有多少个线程正在运行，这些线程是属于哪些模块，可以帮助辅助定位一些线程数量多导致的内存或其他性能问题（比如耗电）。</p>
+<h3 id="分析-native-内存泄漏"><a href="#分析-native-内存泄漏" class="headerlink" title="分析 native 内存泄漏"></a>分析 native 内存泄漏</h3><p>native 内存不像 java heap 那样可以 dump 整个堆进行分析，要进行内存泄漏分析也不容易。这里主要介绍 3 个工具</p>
+<h4 id="Perfetto-跟踪-Native-Allocations"><a href="#Perfetto-跟踪-Native-Allocations" class="headerlink" title="Perfetto 跟踪 Native Allocations"></a>Perfetto 跟踪 Native Allocations</h4><p>Perfetto 工具基本使用方式可以参考这位博主的系列文章：<a href="https://androidperformance.com/2024/05/21/Android-Perfetto-01-What-is-perfetto/" target="_blank" rel="noopener">https://androidperformance.com/2024/05/21/Android-Perfetto-01-What-is-perfetto/</a> </p>
+<p>用 Perfetto 可以实时跟踪 Native 层的内存分配（通过 malloc、calloc 之类的方法分配的内存），它跟使用 Android Studio 中的 Track Memory Consumption（Native Allocations）是一样的，只是可以配置的参数更多、更自由，也更适合用自动化脚本处理。</p>
+<p><img src="/2025/11/01/memory-analysis/./perfetto.png" alt></p>
+<p>具体方式是：</p>
+<ul>
+<li>下载这个 python 脚本：<a href="https://raw.githubusercontent.com/google/perfetto/refs/heads/main/tools/heap_profile" target="_blank" rel="noopener">https://raw.githubusercontent.com/google/perfetto/refs/heads/main/tools/heap_profile</a>，保存为 <code>heap_profile.py</code></li>
+<li>使用<code>python3 ~/Downloads/heap_profile.py -o ~/Downloads/native_heap/</code> 命令开始抓取。其中 -o 参数表示产物输出目录，需要是一个空目录</li>
+<li>在适当的时候按 <code>ctrl+c</code> 终止上述命令，之后产物会保存在 <code>-o</code>参数指定的目录。然后可以用 <a href="https://ui.perfetto.dev/#!/" target="_blank" rel="noopener">https://ui.perfetto.dev/#!/</a> 打开对应的文件：</li>
+</ul>
+<p><img src="/2025/11/01/memory-analysis/./nativeheapdump.png" alt></p>
+<p>抓取的数据中会显示采样聚合的 native 内存分配调用栈，可以有四个维度展示这些调用栈：</p>
+<pre><code>* Unreleased Malloc Size：申请但是没有释放的内存大小
+* Unreleased Malloc Count：申请但是没有释放的次数（相关于 申请次数 - 释放次数）
+* Total Malloc Size：申请内存的总大小
+* Total Malloc Count：申请内存的总次数
+</code></pre><p>一般需要关注<code>Unreleased Malloc Size</code>，这部分可能是内存泄漏，当然也不绝对，有可能这部分内存只是还不到释放的时机，不应该释放。需要根据堆栈 case by case 分析处理。</p>
+<h4 id="koom-native-leak"><a href="#koom-native-leak" class="headerlink" title="koom-native-leak"></a>koom-native-leak</h4><p><a href="https://github.com/KwaiAppTeam/KOOM/tree/master/koom-native-leak" target="_blank" rel="noopener">koom-native-leak</a> 是快手开发的用于监控 Native 内存泄漏的库。它通过 hook malloc/free 等内存分配器方法来跟踪记录内存分配与回收，以分析是否有内存泄漏。</p>
+<p>详情可见：<a href="https://github.com/KwaiAppTeam/KOOM/blob/master/koom-native-leak/README.zh-CN.md" target="_blank" rel="noopener">https://github.com/KwaiAppTeam/KOOM/blob/master/koom-native-leak/README.zh-CN.md</a></p>
+<p>需要说明的是：测试下来 <a href="https://github.com/KwaiAppTeam/KOOM/tree/master/koom-native-leak" target="_blank" rel="noopener">koom-native-leak</a> 目前只在 Android 10 （API 29）的设备上有效果，其他版本基本抓不到任何 native 内存泄漏的 case 。</p>
+<h4 id="MemoryLeakDetector"><a href="#MemoryLeakDetector" class="headerlink" title="MemoryLeakDetector"></a>MemoryLeakDetector</h4><p><a href="https://github.com/bytedance/memory-leak-detector/blob/master/README_cn.md" target="_blank" rel="noopener">MemoryLeakDetector</a> (Raphael) 是字节跳动开发的用于监控 Native 内存泄漏的库。原理同 koom-native-leak 类似，都是通过 hook malloc/free 等内存分配器方法来记录内存的分配和回收。不过 MemoryLeakDetector 兼容性更好一些，目前测试下来各个版本的系统都没有遇到大问题。</p>
+<p>关于 <a href="https://github.com/bytedance/memory-leak-detector/blob/master/README_cn.md" target="_blank" rel="noopener">MemoryLeakDetector</a> 详情可见官方文档：<a href="https://github.com/bytedance/memory-leak-detector" target="_blank" rel="noopener">https://github.com/bytedance/memory-leak-detector</a></p>
+<p>需要说明的是：MemoryLeakDetector mmap 也会监控 mmap 等函数。但对于内存分析来说，使用 mmap 申请的内存，并不代表实际使用的内存，在未实际使用对应的内存时，是不计入 PSS 中。</p>
+<p>另外，还需要注意的是无论是 <a href="https://github.com/bytedance/memory-leak-detector/blob/master/README_cn.md" target="_blank" rel="noopener">MemoryLeakDetector</a> 还是 <a href="https://github.com/KwaiAppTeam/KOOM/tree/master/koom-native-leak" target="_blank" rel="noopener">koom-native-leak</a> ，都不能保证检测到的未释放内存 100% 就是内存泄漏，也不能保证能保证所有的内存泄漏都能被检测到。</p>
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/内存/">内存</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2025/10/18/some-tips/" data-tooltip="日常工作工具 Tips" aria-label="下一篇: 日常工作工具 Tips">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2025/11/01/memory-analysis/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2025/11/01/memory-analysis/&amp;title=内存问题分析方法总结" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2025/11/01/memory-analysis/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitalk-container"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2025 如竹. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2025/10/18/some-tips/" data-tooltip="日常工作工具 Tips" aria-label="下一篇: 日常工作工具 Tips">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2025/11/01/memory-analysis/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2025/11/01/memory-analysis/&amp;title=内存问题分析方法总结" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2025/11/01/memory-analysis/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2025/11/01/memory-analysis/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2025/11/01/memory-analysis/&amp;title=内存问题分析方法总结">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2025/11/01/memory-analysis/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">如竹</h4>
+        
+            <div id="about-card-bio"><p>诗意地生活~</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p><a href='https://srf.baidu.com' target='_blank'>百度手机输入法</a></p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-peofhqjkzcghmndknakluequy1y6owxdwpaqyju9ntl9zxnk7rdolb3rjjoj.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+		<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+		<script type="text/javascript">
+			var gitalk = new Gitalk({
+				  clientID: 'b6336850403ce274da24',
+				  clientSecret: 'f665e0808a622fb04c3e57b8bc8d2079347c5c7b',
+				  repo: 'likebamboo.github.com',
+				  owner: 'likebamboo',
+				  admin: 'likebamboo',
+				  id: '2025/11/01/memory-analysis/', // Ensure uniqueness and length less than 50{{ page.title }}
+				  distractionFreeMode: 'true'  // Facebook-like distraction free mode
+				})
+				gitalk.render('gitalk-container')
+		</script>
+    
+
+
+
+    </body>
+</html>

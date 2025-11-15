@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="如竹的博客">
+    <title>【译】Android Studio 使用技巧系列(一)-快捷键 - 如竹的博客</title>
+    <meta name="author" content="如竹">
+    
+    
+        <link rel="icon" href="https://www.likebamboo.com/assets/images/favicon.ico">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="Android Studio中快捷键使用技巧">
+<meta name="keywords" content="androidstuido">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="【译】Android Studio 使用技巧系列(一)-快捷键">
+<meta property="og:url" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/index.html">
+<meta property="og:site_name" content="如竹的博客">
+<meta property="og:description" content="Android Studio中快捷键使用技巧">
+<meta property="og:locale" content="zh-cn">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/1.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/2.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/3.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/4.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/05-quickdefinition.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/6.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/7.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/8.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/9.gif">
+<meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/10.gif">
+<meta property="og:updated_time" content="2025-10-29T12:10:40.712Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】Android Studio 使用技巧系列(一)-快捷键">
+<meta name="twitter:description" content="Android Studio中快捷键使用技巧">
+<meta name="twitter:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/1.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/assets/images/avatar.jpg"/>
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/abstract-2845763_640.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/abstract-2845763_640.jpg" />
+    
+    
+        <meta property="og:image" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/abstract-2845763_640.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://www.likebamboo.com/2015/09/29/android-studio-tips-1/abstract-2845763_640.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-pz4cc6y13wt2trzqa8l3n9v0yykr0sstdaheem7qj628nhjmhp9pfawvqawz.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50170589-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">如竹的博客</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+                </a>
+                <h4 class="sidebar-profile-name">如竹</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>诗意地生活~</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="首页"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首页</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="分类"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">分类</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="标签"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">标签</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="归档"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">归档</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="关于"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">关于</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/likebamboo" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="mailto:likebamboo@163.com" target="_blank" rel="noopener" title="邮箱">
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-envelope-o" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">邮箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-lg fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    "
+             style="background-image:url('/2015/09/29/android-studio-tips-1/abstract-2845763_640.jpg');"
+             data-behavior="4">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            【译】Android Studio 使用技巧系列(一)-快捷键
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time itemprop="datePublished" datetime="2015-09-29T13:00:00+08:00">
+	
+		    9月 29, 2015
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/categories/android/">android</a>
+
+
+    
+</div>
+
+    
+</div>
+            
+        </div>
+
+            <div id="main" data-behavior="4"
+                 class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <!-- excerpt --></p>
+<blockquote>
+<p>原文:<a href="http://www.developerphil.com/android-studio-tips-of-the-day-roundup-1/" target="_blank" rel="noopener">http://www.developerphil.com/android-studio-tips-of-the-day-roundup-1/</a></p>
+</blockquote>
+<h3 id="1-高亮所有相同变量"><a href="#1-高亮所有相同变量" class="headerlink" title="1. 高亮所有相同变量"></a>1. 高亮所有相同变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : cmd + shift + f7</span><br><span class="line">Windows / Linux : ctrl + shift + f7</span><br></pre></td></tr></table></figure>
+<p>这个快捷键将会高亮当前选中字符所有的出现之处。当然这个快捷键不仅仅只是一些简单地模式匹配，它还会理解当前的变量所处范围，只高亮相关的字符。<br>高亮之后你就可以使用<code>Edit → Find → Find Next/Previous</code>处定义的快捷方式来选择你要操作的高亮字符。</p>
+<blockquote>
+<p><strong>译者注：</strong> Eclipse 中高亮显示成员变量的快捷键是 <code>alt + shift + o</code> .</p>
+</blockquote>
+<p><strong>相关技巧：</strong></p>
+<blockquote>
+<ul>
+<li>高亮代码方法中的<code>return</code> 或者 <code>throw</code>, 同时也会高亮这个方法的所有出口。</li>
+<li>高亮<code>Java</code>类的<code>extends</code> 或者<code>implements</code> 的定义部分也会高亮对应的重写或者实现的方法。</li>
+<li>高亮<code>import</code>语句也会高亮它被使用的地方。</li>
+<li><code>Esc</code>键可以取消高亮。</li>
+</ul>
+</blockquote>
+<p><img src="/2015/09/29/android-studio-tips-1/1.gif" alt="Alt text"></p>
+<h3 id="2-在方法和内部类之间跳转"><a href="#2-在方法和内部类之间跳转" class="headerlink" title="2. 在方法和内部类之间跳转"></a>2. 在方法和内部类之间跳转</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : ctrl + up/down</span><br><span class="line">Windows / Linux : alt + up/down</span><br></pre></td></tr></table></figure>
+<p>这个快捷键可以让你很方便的在当前文件的方法或者类上面跳转。<br>如果你当前处于一个方法中，此快捷键（向上）可以让你的光标跳至方法名处。这对你重构代码或者找到这个代码的使用之处很有帮助。</p>
+<blockquote>
+<p><strong>译者注：</strong> Eclipse 中该快捷键是 <code>ctrl + shift + up/down</code> .</p>
+</blockquote>
+<p><img src="/2015/09/29/android-studio-tips-1/2.gif" alt="Alt text"></p>
+<h3 id="3-类文件结构弹窗"><a href="#3-类文件结构弹窗" class="headerlink" title="3. 类文件结构弹窗"></a>3. 类文件结构弹窗</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : cmd + f12</span><br><span class="line">Windows / Linux : ctrl + f12</span><br></pre></td></tr></table></figure>
+<p>这个快捷键可以帮助你展示当前类文件的方法结构。你可以使用这个快捷键弹出弹窗，查找你想要的方法名。</p>
+<blockquote>
+<p><strong>译者注：</strong> Eclipse 中该快捷键是 <code>ctrl + o</code> .</p>
+</blockquote>
+<p><strong>相关技巧：</strong></p>
+<blockquote>
+<ul>
+<li>你可以使用驼峰字符来过滤候选方法列表。例如:输入<code>oCr</code> 就可以找到<code>onCreate</code>方法。</li>
+<li>你可以选择是否展示匿名类。如果你勾选了<code>是</code>就可以很方便的查找<code>OnClickListener</code>里面的<code>onClick</code>方法了。</li>
+</ul>
+</blockquote>
+<p><img src="/2015/09/29/android-studio-tips-1/3.gif" alt="Alt text"></p>
+<h3 id="4-方法调用层级弹窗"><a href="#4-方法调用层级弹窗" class="headerlink" title="4. 方法调用层级弹窗"></a>4. 方法调用层级弹窗</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : ctrl + alt + h</span><br><span class="line">Windows / Linux : ctrl + alt + h</span><br></pre></td></tr></table></figure>
+<p>这个快捷键会显示一个方法的声明和它的调用之间的可能的路径。<br><img src="/2015/09/29/android-studio-tips-1/4.gif" alt="Alt text"></p>
+<h3 id="5-快速查找定义"><a href="#5-快速查找定义" class="headerlink" title="5. 快速查找定义"></a>5. 快速查找定义</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : alt + space </span><br><span class="line">Windows / Linux : ctrl + shift + i</span><br></pre></td></tr></table></figure>
+<p>你是否曾经想在当前页面查看一个方法或类的定义？使用这个快捷键在当前页面查找它。<br><img src="/2015/09/29/android-studio-tips-1/05-quickdefinition.gif" alt="Alt text"></p>
+<h3 id="6-折叠或展开代码块"><a href="#6-折叠或展开代码块" class="headerlink" title="6.  折叠或展开代码块"></a>6.  折叠或展开代码块</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : alt + plus/minus </span><br><span class="line">Windows / Linux : ctrl + shift + plus/minus</span><br></pre></td></tr></table></figure>
+<p>这个特性的目的是隐藏在某一时刻你不关心的代码。在这个简单的形式中，它将会隐藏整个代码块（如：当你打开一个新文件时忽略导入列表）。更有趣的是它可以隐藏匿名内部类周围的模板代码让它看起来像是一个<code>lambda</code>表达式。<br><img src="/2015/09/29/android-studio-tips-1/6.gif" alt="Alt text"></p>
+<p><strong>相关技巧：</strong></p>
+<blockquote>
+<ul>
+<li>你可以在<code>Setting-&gt;Editor-&gt;Code Folding</code>中设置默认的折叠范围</li>
+</ul>
+</blockquote>
+<h3 id="7-书签"><a href="#7-书签" class="headerlink" title="7.   书签"></a>7.   书签</h3><h4 id="7-1-设置或取消书签"><a href="#7-1-设置或取消书签" class="headerlink" title="7.1 设置或取消书签"></a>7.1 设置或取消书签</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : f3</span><br><span class="line">Windows / Linux : f11</span><br></pre></td></tr></table></figure>
+<h4 id="7-2-带助记符的书签"><a href="#7-2-带助记符的书签" class="headerlink" title="7.2  带助记符的书签"></a>7.2  带助记符的书签</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : alt + f3</span><br><span class="line">Windows / Linux : alt + f11</span><br></pre></td></tr></table></figure>
+<p>如你给书签分配了一个数字，你可以使用下面的快捷键返回到对应书签：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl+number</span><br></pre></td></tr></table></figure></p>
+<h4 id="7-3-显示书签列表"><a href="#7-3-显示书签列表" class="headerlink" title="7.3  显示书签列表"></a>7.3  显示书签列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : cmd + f3</span><br><span class="line">Windows / Linux : shift + f11</span><br></pre></td></tr></table></figure>
+<p><img src="/2015/09/29/android-studio-tips-1/7.gif" alt="Alt text"></p>
+<blockquote>
+<p><strong>译者注：</strong> Eclipse  中貌似并没有书签的快捷键，但是同样也可以设置书签，只要在编辑窗口左边的边框上右键就可以看到添加书签的菜单。 同时可以通过<code>window -&gt; show view -&gt; Bookmarks</code>来查看所有书签。</p>
+</blockquote>
+<h3 id="8-查找菜单项"><a href="#8-查找菜单项" class="headerlink" title="8. 查找菜单项"></a>8. 查找菜单项</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : cmd + shift + a</span><br><span class="line">Windows / Linux :  ctrl + shift + a</span><br></pre></td></tr></table></figure>
+<p>你可以通过名称在Android Studio中调用任何你知道的菜单或<code>action</code>！对于你之前使用过但没有快捷键的命令来说这是非常有用的。<br><img src="/2015/09/29/android-studio-tips-1/8.gif" alt="Alt text"></p>
+<p><strong>相关技巧：</strong></p>
+<blockquote>
+<ul>
+<li>如果这个Action有快捷键，它将会显示在旁边。</li>
+</ul>
+</blockquote>
+<h3 id="9-移动行"><a href="#9-移动行" class="headerlink" title="9.  移动行"></a>9.  移动行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : alt + shift + up/down</span><br><span class="line">Windows / Linux :  alt + shift + up/down</span><br></pre></td></tr></table></figure>
+<p>对，这个是用来上下移动当前或选择行代码。没有什么更多要说的，享受它吧。</p>
+<blockquote>
+<p><strong>译者注：</strong> Eclipse  中的快捷键是: <code>alt + up/down</code></p>
+</blockquote>
+<p><img src="/2015/09/29/android-studio-tips-1/9.gif" alt="Alt text"></p>
+<h3 id="10-删除行"><a href="#10-删除行" class="headerlink" title="10.  删除行"></a>10.  删除行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mac : cmd + backspace</span><br><span class="line">Windows / Linux :  ctrl + y</span><br></pre></td></tr></table></figure>
+<p>这个是用来删除当前或选中的行代码</p>
+<blockquote>
+<p><strong>译者注：</strong> Eclipse  中的快捷键是: <code>ctrl + d</code></p>
+</blockquote>
+<p><img src="/2015/09/29/android-studio-tips-1/10.gif" alt="Alt text"></p>
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/androidstuido/">androidstuido</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/09/29/android-studio-tips-2/" data-tooltip="【译】Android Studio 使用技巧系列(二)-快捷键" aria-label="上一篇: 【译】Android Studio 使用技巧系列(二)-快捷键">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/09/29/android-studio-tips-0/" data-tooltip="【译】Android Studio 使用技巧系列-快捷键跳转" aria-label="下一篇: 【译】Android Studio 使用技巧系列-快捷键跳转">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/&amp;title=【译】Android Studio 使用技巧系列(一)-快捷键" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+                <div id="gitalk-container"></div>
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2025 如竹. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/09/29/android-studio-tips-2/" data-tooltip="【译】Android Studio 使用技巧系列(二)-快捷键" aria-label="上一篇: 【译】Android Studio 使用技巧系列(二)-快捷键">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/09/29/android-studio-tips-0/" data-tooltip="【译】Android Studio 使用技巧系列-快捷键跳转" aria-label="下一篇: 【译】Android Studio 使用技巧系列-快捷键跳转">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/" title="分享到 Weibo">
+                    <i class="fa fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/&amp;title=【译】Android Studio 使用技巧系列(一)-快捷键" title="分享到 QQ">
+                    <i class="fa fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/" title="分享到 Qzone">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://service.weibo.com/share/share.php?&amp;title=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/">
+                    <i class="fa fa-weibo" aria-hidden="true"></i><span>分享到 Weibo</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/&amp;title=【译】Android Studio 使用技巧系列(一)-快捷键">
+                    <i class="fa fa-qq" aria-hidden="true"></i><span>分享到 QQ</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.likebamboo.com/2015/09/29/android-studio-tips-1/">
+                    <i class="fa fa-star" aria-hidden="true"></i><span>分享到 Qzone</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="作者的图片"/>
+        
+            <h4 id="about-card-name">如竹</h4>
+        
+            <div id="about-card-bio"><p>诗意地生活~</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p><a href='https://srf.baidu.com' target='_blank'>百度手机输入法</a></p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                ShenZhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-peofhqjkzcghmndknakluequy1y6owxdwpaqyju9ntl9zxnk7rdolb3rjjoj.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+		<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+		<script type="text/javascript">
+			var gitalk = new Gitalk({
+				  clientID: 'b6336850403ce274da24',
+				  clientSecret: 'f665e0808a622fb04c3e57b8bc8d2079347c5c7b',
+				  repo: 'likebamboo.github.com',
+				  owner: 'likebamboo',
+				  admin: 'likebamboo',
+				  id: '2015/09/29/android-studio-tips-1/', // Ensure uniqueness and length less than 50{{ page.title }}
+				  distractionFreeMode: 'true'  // Facebook-like distraction free mode
+				})
+				gitalk.render('gitalk-container')
+		</script>
+    
+
+
+
+    </body>
+</html>
