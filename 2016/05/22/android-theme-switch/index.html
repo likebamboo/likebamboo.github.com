@@ -13,25 +13,24 @@
         <link rel="icon" href="https://www.likebamboo.com/assets/images/favicon.ico">
     
     
-        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
-    
     <meta name="description" content="本文将探索Android APP主题切换功能的各种实现方案，并通过实例总结出各个方案的优缺点以及适应场景。">
-<meta name="keywords" content="android,主题切换">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Android 主题切换实现方案探索">
 <meta property="og:url" content="https://www.likebamboo.com/2016/05/22/android-theme-switch/index.html">
 <meta property="og:site_name" content="如竹的博客">
 <meta property="og:description" content="本文将探索Android APP主题切换功能的各种实现方案，并通过实例总结出各个方案的优缺点以及适应场景。">
-<meta property="og:locale" content="zh-cn">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-style.gif">
 <meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-zip.gif">
 <meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-resources.png">
 <meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-get-resources.png">
 <meta property="og:image" content="http://120.24.93.248/images/pptv/theme-switch-apk.gif">
-<meta property="og:updated_time" content="2025-10-29T12:10:40.741Z">
+<meta property="article:published_time" content="2016-05-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-29T12:10:40.741Z">
+<meta property="article:author" content="如竹">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="主题切换">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 主题切换实现方案探索">
-<meta name="twitter:description" content="本文将探索Android APP主题切换功能的各种实现方案，并通过实例总结出各个方案的优缺点以及适应场景。">
 <meta name="twitter:image" content="http://120.24.93.248/images/pptv/theme-switch-style.gif">
     
     
@@ -50,7 +49,9 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-pz4cc6y13wt2trzqa8l3n9v0yykr0sstdaheem7qj628nhjmhp9pfawvqawz.min.css">
+    
+<link rel="stylesheet" href="/assets/css/style-pz4cc6y13wt2trzqa8l3n9v0yykr0sstdaheem7qj628nhjmhp9pfawvqawz.min.css">
+
     <!--STYLES END-->
     
     <script type="text/javascript">
@@ -81,7 +82,7 @@
 <header id="header" data-behavior="4">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
-        <a class="header-title-link" href="/ ">如竹的博客</a>
+        <a class="header-title-link" href="/%20">如竹的博客</a>
     </div>
     
         
@@ -122,7 +123,7 @@
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/ "
+                             href="/%20"
                             
                             title="首页"
                         >
@@ -280,7 +281,7 @@
 <p>图1-1是一个示例程序的运行效果：</p>
 <p><img src="http://120.24.93.248/images/pptv/theme-switch-style.gif" alt="图1-1"></p>
 <blockquote>
-<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/style" target="_blank" rel="noopener">https://github.com/likebamboo/ThemeSwitch/tree/style</a></p>
+<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/style">https://github.com/likebamboo/ThemeSwitch/tree/style</a></p>
 </blockquote>
 <p>通过App内置的多个style实现主题切换小结：</p>
 <table>
@@ -310,7 +311,7 @@
 <p>图2-1是一个示例程序的运行效果：</p>
 <p><img src="http://120.24.93.248/images/pptv/theme-switch-zip.gif" alt="图2-1"></p>
 <blockquote>
-<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/zip" target="_blank" rel="noopener">https://github.com/likebamboo/ThemeSwitch/tree/zip</a></p>
+<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/zip">https://github.com/likebamboo/ThemeSwitch/tree/zip</a></p>
 </blockquote>
 <p>通过普通zip主题包实现主题切换小结：</p>
 <table>
@@ -345,7 +346,7 @@
 <p>图3-3是一个示例程序的运行效果：</p>
 <p><img src="http://120.24.93.248/images/pptv/theme-switch-apk.gif" alt="图3-3"></p>
 <blockquote>
-<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/apk" target="_blank" rel="noopener">https://github.com/likebamboo/ThemeSwitch/tree/apk</a></p>
+<p>示例程序源码： <a href="https://github.com/likebamboo/ThemeSwitch/tree/apk">https://github.com/likebamboo/ThemeSwitch/tree/apk</a></p>
 </blockquote>
 <p>通过apk主题包实现主题切换小结：</p>
 <table>
@@ -372,7 +373,7 @@
 </table>
 <h3 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h3><p>以上就是主题切换功能常见的几种实现方案，聚力视频APP目前采用最后一种。也许还有其他的实现方案。但这些实现方案中很难说哪种最好，毕竟就技术而言，常常只有最适合的方案，而没有最好的方案。</p>
 <blockquote>
-<p>参考文章 :<br><a href="https://blog.stylingandroid.com/prism-fundamentals-part-1/" target="_blank" rel="noopener">https://blog.stylingandroid.com/prism-fundamentals-part-1/</a></p>
+<p>参考文章 :<br><a href="https://blog.stylingandroid.com/prism-fundamentals-part-1/">https://blog.stylingandroid.com/prism-fundamentals-part-1/</a></p>
 </blockquote>
             
 
@@ -383,7 +384,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">标签</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/android/">android</a> <a class="tag tag--primary tag--small t-link" href="/tags/主题切换/">主题切换</a>
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/android/" rel="tag">android</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2/" rel="tag">主题切换</a>
 
             </div>
         
@@ -620,7 +621,9 @@
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
         <!--SCRIPTS-->
+
 <script src="/assets/js/script-peofhqjkzcghmndknakluequy1y6owxdwpaqyju9ntl9zxnk7rdolb3rjjoj.min.js"></script>
+
 <!--SCRIPTS END-->
 
     

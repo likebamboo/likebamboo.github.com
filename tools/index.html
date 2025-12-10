@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线开发工具集 - 时间戳转换、URL编解码、Base64转换工具、颜色转换</title>
+    <meta name="description" content="免费在线工具集，提供时间戳转换、URL编码解码、Base64编码解码、颜色转换功能，支持秒级和毫秒级时间戳互转，开发者必备工具。">
+    <meta name="keywords" content="时间戳转换,URL编码,URL解码,Base64编码,Base64解码,颜色转换,在线工具,开发者工具">
+    <meta name="author" content="likebamboo">
+    <meta property="og:title" content="在线开发工具集 - 时间戳/URL/Base64转换工具">
+    <meta property="og:description" content="免费在线工具集，提供时间戳转换、URL编码解码、Base64编码解码、颜色转换功能">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://likebamboo.com">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            background: #f8fafc;
+            min-height: 100vh;
+            color: #334155;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .tabs-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: #6366f1;
+            background: #f8fafc;
+        }
+
+        .tab-btn.active {
+            color: #6366f1;
+            background: white;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+        }
+
+        .tab-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            line-height: 1.5;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .radio-option input {
+            width: 18px;
+            height: 18px;
+            accent-color: #6366f1;
+        }
+
+        .radio-label {
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            color: #374151;
+        }
+
+        .result-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 4px solid #6366f1;
+        }
+
+        .result-content {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            word-break: break-all;
+            line-height: 1.6;
+            color: #1e293b;
+        }
+
+        .current-time {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .time-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .time-label {
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .time-value {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .copy-hint {
+            position: relative;
+        }
+
+        .copy-hint::after {
+            content: '点击复制';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .copy-hint:hover::after {
+            opacity: 1;
+        }
+
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-swatch.active {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px #6366f1;
+        }
+
+        .color-swatch::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 6px;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+        }
+
+        @media (max-width: 768px) {
+            .tabs-container {
+                padding: 1rem;
+            }
+
+            .tabs-header {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .tab-btn {
+                text-align: center;
+            }
+
+            .tab-content {
+                padding: 1.5rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: auto;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>工具集</h1>
+        <p>简洁高效的开发辅助工具</p>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('timestamp')">时间戳</button>
+            <button class="tab-btn" onclick="switchTab('url')">URL编解码</button>
+            <button class="tab-btn" onclick="switchTab('base64')">Base64编解码</button>
+            <button class="tab-btn" onclick="switchTab('color')">颜色转换</button>
+            <button class="tab-btn" onclick="switchTab('base')">进制转换</button>
+        </div>
+
+        <div class="tab-content">
+            <!-- 时间戳转换 -->
+            <div id="timestamp-panel" class="tab-panel active">
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="timestampType" value="seconds">
+                        <span class="radio-label">秒级</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="timestampType" value="milliseconds" checked>
+                        <span class="radio-label">毫秒级</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">时间戳转时间</label>
+                    <div class="btn-group">
+                        <input type="text" id="timestampInput" class="form-input" placeholder="输入时间戳">
+                        <button class="btn btn-primary" onclick="convertTimestampToTime()">转换</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">时间转时间戳</label>
+                    <div class="btn-group">
+                        <input type="text" id="timeInput" class="form-input" placeholder="格式：YYYY-MM-DD HH:mm:ss">
+                        <button class="btn btn-primary" onclick="convertTimeToTimestamp()">转换</button>
+                    </div>
+                </div>
+
+                <div class="current-time">
+                    <div class="time-item">
+                        <span class="time-label">当前秒级时间戳</span>
+                        <span class="time-value" id="currentSeconds"></span>
+                    </div>
+                    <div class="time-item">
+                        <span class="time-label">当前毫秒级时间戳</span>
+                        <span class="time-value" id="currentMilliseconds"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">转换结果</label>
+                    <div class="result-card copy-hint" id="timestampResult">
+                        <div class="result-content">等待转换...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- URL编解码 -->
+            <div id="url-panel" class="tab-panel">
+                <div class="form-group">
+                    <label class="form-label">输入文本</label>
+                    <textarea id="urlInput" class="form-input form-textarea" placeholder="输入需要编码或解码的文本"></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="encodeURL()">URL编码</button>
+                    <button class="btn btn-secondary" onclick="decodeURL()">URL解码</button>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">结果</label>
+                    <div class="result-card copy-hint" id="urlResult">
+                        <div class="result-content">等待处理...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Base64编解码 -->
+            <div id="base64-panel" class="tab-panel">
+                <div class="form-group">
+                    <label class="form-label">输入文本</label>
+                    <textarea id="base64Input" class="form-input form-textarea" placeholder="输入需要编码或解码的文本"></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="encodeBase64()">Base64编码</button>
+                    <button class="btn btn-secondary" onclick="decodeBase64()">Base64解码</button>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">结果</label>
+                    <div class="result-card copy-hint" id="base64Result">
+                        <div class="result-content">等待处理...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 颜色转换 -->
+            <div id="color-panel" class="tab-panel">
+                <div class="form-group">
+                    <label class="form-label">输入颜色代码</label>
+                    <div class="btn-group">
+                        <input type="text" id="colorInput" class="form-input"
+                            placeholder="#6366f1, rgb(99, 102, 241), hsl(240, 80%, 67%)">
+                        <button class="btn btn-primary" onclick="convertColor()">转换</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">颜色选择器</label>
+                    <div style="position: relative; height: 100px; width: 100px; margin-bottom: 1rem;">
+                        <input type="color" id="colorPicker"
+                            style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                        <canvas id="colorCanvas" width="100" height="100" style="border-radius: 10px;"></canvas>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">颜色预览</label>
+                    <div class="color-preview" id="colorPreview">
+                        <div class="color-block" style="background: #e5e7eb;"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">转换结果</label>
+                    <div class="result-card copy-hint" id="colorResult">
+                        <div class="result-content">等待转换...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 进制转换 -->
+            <div id="base-panel" class="tab-panel">
+                <div class="form-group">
+                    <label class="form-label">输入数值</label>
+                    <input type="text" id="numberInput" class="form-input" placeholder="输入要转换的数值">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">输入进制</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="inputBase" value="2">
+                            <span class="radio-label">二进制</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="inputBase" value="8">
+                            <span class="radio-label">八进制</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="inputBase" value="10">
+                            <span class="radio-label">十进制</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="inputBase" value="16" checked>
+                            <span class="radio-label">十六进制</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="inputBase" value="32">
+                            <span class="radio-label">三十二进制</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">转换结果</label>
+                    <div class="result-card copy-hint" id="baseResult">
+                        <div class="result-content">等待转换...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
