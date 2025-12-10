@@ -269,14 +269,21 @@
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
             <!-- excerpt -->
+
+
 <h3 id="解压并反编译-python-打包的-exe-文件"><a href="#解压并反编译-python-打包的-exe-文件" class="headerlink" title="解压并反编译 python 打包的 exe 文件"></a>解压并反编译 python 打包的 exe 文件</h3><p><strong>1，下载 pyinstxtractor.py，将 exe 文件解压转换成 pyc 文件</strong></p>
 <p>在 <a href="https://github.com/extremecoders-re/pyinstxtractor">https://github.com/extremecoders-re/pyinstxtractor</a> 下载 pyinstxtractor.py 到任意目录</p>
 <p>然后执行 <code>python pyinstxtractor.py test.exe</code> 解压 exe 得到编译后的 python。</p>
 <p><strong>注意：</strong> 你需要使用和打包 exe 时一样的 python 版本，否则可能会出现类似如下提示，某些资源无法解压</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[!] Warning: This script is running in a different Python version than the one used to build the executable. </span><br><span class="line">[!] Please run this script in Python 3.7 to prevent extraction errors during unmarshalling </span><br><span class="line">[!] Skipping pyz extraction</span><br></pre></td></tr></table></figure>
+
 <p><strong>2，使用 pycdc 将 pyc 反编译成 py 文件</strong></p>
-<p>克隆 pycdc 仓库<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zrax/pycdc.git</span><br><span class="line">cd pycdc</span><br><span class="line">mkdir build &amp;&amp; cd build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br></pre></td></tr></table></figure></p>
-<p>反编译 .pyc 文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./pycdc 1client.pyc &gt; client.py</span><br></pre></td></tr></table></figure></p>
+<p>克隆 pycdc 仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zrax/pycdc.git</span><br><span class="line">cd pycdc</span><br><span class="line">mkdir build &amp;&amp; cd build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>反编译 .pyc 文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./pycdc 1client.pyc &gt; client.py</span><br></pre></td></tr></table></figure>
+
 <p>另见 <a href="https://crackmes.cn/doc/157/">https://crackmes.cn/doc/157/</a></p>
 <h3 id="无需登录下载-oracle-jdk"><a href="#无需登录下载-oracle-jdk" class="headerlink" title="无需登录下载 oracle jdk"></a>无需登录下载 oracle jdk</h3><p>adobe 提供的下载： <a href="https://helpx.adobe.com/coldfusion/kb/coldfusion-downloads.html#downloads3">https://helpx.adobe.com/coldfusion/kb/coldfusion-downloads.html#downloads3</a></p>
 <blockquote>
@@ -285,12 +292,11 @@
 <h3 id="Windows-下-android-usb-驱动"><a href="#Windows-下-android-usb-驱动" class="headerlink" title="Windows 下 android usb 驱动"></a>Windows 下 android usb 驱动</h3><ol>
 <li><p>各个 OEM 厂商的驱动： <a href="https://developer.android.google.cn/studio/run/oem-usb?hl=zh-cn#Drivers">https://developer.android.google.cn/studio/run/oem-usb?hl=zh-cn#Drivers</a></p>
 <ul>
-<li>荣耀手机需要安装荣耀手机助理： <a href="https://www.honor.com/cn/tech/honor-suite/">https://www.honor.com/cn/tech/honor-suite/</a>  </li>
+<li>荣耀手机需要安装荣耀手机助理： <a href="https://www.honor.com/cn/tech/honor-suite/">https://www.honor.com/cn/tech/honor-suite/</a></li>
 </ul>
 </li>
-</ol>
-<ol start="2">
-<li>Google USB 驱动： <a href="https://developer.android.google.cn/studio/run/win-usb?hl=zh-cn">https://developer.android.google.cn/studio/run/win-usb?hl=zh-cn</a></li>
+<li><p>Google USB 驱动： <a href="https://developer.android.google.cn/studio/run/win-usb?hl=zh-cn">https://developer.android.google.cn/studio/run/win-usb?hl=zh-cn</a></p>
+</li>
 </ol>
 <h4 id="Android-Studio-旧版本下载"><a href="#Android-Studio-旧版本下载" class="headerlink" title="Android Studio 旧版本下载"></a>Android Studio 旧版本下载</h4><p><a href="https://developer.android.com/studio/archive">https://developer.android.com/studio/archive</a> 注意一定要把语言切换为 English，中文页面下会出现【抱歉，找不到该页面错误】</p>
 <h4 id="腾讯-Android-SDK-镜像"><a href="#腾讯-Android-SDK-镜像" class="headerlink" title="腾讯 Android SDK 镜像"></a>腾讯 Android SDK 镜像</h4><p><a href="https://mirrors.cloud.tencent.com/AndroidSDK/">https://mirrors.cloud.tencent.com/AndroidSDK/</a></p>
