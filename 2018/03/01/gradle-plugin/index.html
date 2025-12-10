@@ -22,15 +22,15 @@
 <meta property="og:site_name" content="如竹的博客">
 <meta property="og:description" content="Gradle插件将可重复使用的构建逻辑封装起来，可用于许多不同的项目和构建。 Gradle插件就相当于jar包，里面封装了一些共有的方法以及一些自定义的task等。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.likebamboo.com/.com//1519961761561.png">
-<meta property="og:image" content="https://www.likebamboo.com/.com//1519962964535.png">
+<meta property="og:image" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/1519961761561.png">
+<meta property="og:image" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/1519962964535.png">
 <meta property="article:published_time" content="2018-02-28T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-10-29T12:10:40.743Z">
 <meta property="article:author" content="如竹">
 <meta property="article:tag" content="gradle">
 <meta property="article:tag" content="插件">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.likebamboo.com/.com//1519961761561.png">
+<meta name="twitter:image" content="https://www.likebamboo.com/2018/03/01/gradle-plugin/1519961761561.png">
     
     
         
@@ -277,7 +277,7 @@
 <h3 id="Gradle插件是什么"><a href="#Gradle插件是什么" class="headerlink" title="Gradle插件是什么"></a>Gradle插件是什么</h3><p>Gradle插件将可重复使用的构建逻辑封装起来，可用于许多不同的项目和构建。 Gradle插件就相当于jar包，里面封装了一些共有的方法以及一些自定义的<code>task</code>等。</p>
 <h3 id="如何开发Gradle插件"><a href="#如何开发Gradle插件" class="headerlink" title="如何开发Gradle插件"></a>如何开发Gradle插件</h3><p>可以使用任何语言开发Gradle插件，只要最终生成字节码就行。一般常用的语言是<code>Groovy</code>、<code>Java</code>、<code>Kotlin</code>。</p>
 <p>下面以<code>Groovy</code>语言为例(IDE使用<code>Intellij Idea</code>)，介绍Gradle插件开发的流程：</p>
-<p>1, 首先需要创建一个工程，然后新建一个名为<code>my-plugin</code>的模块，模块类型选<code>Gradle</code>，语言选择<code>Groovy</code>（如果使用的是<code>Android studio</code>可以新建一个<code>Java</code>模块，然后将<code>main/java/</code>文件夹改名为<code>main/groovy</code>）<br><img src="/.com//1519961761561.png" alt="Alt text"></p>
+<p>1, 首先需要创建一个工程，然后新建一个名为<code>my-plugin</code>的模块，模块类型选<code>Gradle</code>，语言选择<code>Groovy</code>（如果使用的是<code>Android studio</code>可以新建一个<code>Java</code>模块，然后将<code>main/java/</code>文件夹改名为<code>main/groovy</code>）<br><img src="/2018/03/01/gradle-plugin/./1519961761561.png" alt="Alt text"></p>
 <p>2, 修改<code>build.gradle</code>，增加对<code>gradle sdk</code> 和<code>groovy sdk</code>的依赖：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入groovy插件，用于编译groovy等</span></span><br><span class="line">apply plugin: <span class="string">&#x27;groovy&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    testCompile <span class="keyword">group</span>: <span class="string">&#x27;junit&#x27;</span>, name: <span class="string">&#x27;junit&#x27;</span>, version: <span class="string">&#x27;4.12&#x27;</span></span><br><span class="line">    <span class="comment">// 依赖Gradle sdk，插件开发中需要用到gradle的api</span></span><br><span class="line">    <span class="keyword">compile</span> gradleApi()</span><br><span class="line">    <span class="comment">// 依赖groovy sdk</span></span><br><span class="line">    <span class="keyword">compile</span> localGroovy()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -311,7 +311,7 @@
 <p>然后需要在使用插件的模块的<code>build.gradle</code>中添加:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &#x27;my-plugin&#x27;</span><br></pre></td></tr></table></figure>
 <p>其中<code>my-plugin</code>为插件模块<code>resources/META-INF/gradle-plugins</code>下<code>properties</code>文件的文件名(该名称可以和插件模块的名称不相同)。</p>
-<p>刷新下项目，在Gradle视图窗口中就可以看到自定义插件创建的 <code>my-task</code>了：<br><img src="/.com//1519962964535.png" alt="Alt text"></p>
+<p>刷新下项目，在Gradle视图窗口中就可以看到自定义插件创建的 <code>my-task</code>了：<br><img src="/2018/03/01/gradle-plugin/./1519962964535.png" alt="Alt text"></p>
 <p>至此，一个简单的Gradle插件就开发完成了。</p>
 <p><strong>插件模块完整 <a href="./build.gradle">build.gradle</a></strong></p>
 <blockquote>
@@ -356,7 +356,7 @@
     </nav>
     <ul class="post-actions post-action-share">
         <li class="post-action hide-lg hide-md hide-sm">
-            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
                 <i class="fa fa-share-alt" aria-hidden="true"></i>
             </a>
         </li>
@@ -390,7 +390,7 @@
         
         <li class="post-action">
             
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
             
                 <i class="fa fa-list" aria-hidden="true"></i>
             </a>
@@ -444,7 +444,7 @@
     </nav>
     <ul class="post-actions post-action-share">
         <li class="post-action hide-lg hide-md hide-sm">
-            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
                 <i class="fa fa-share-alt" aria-hidden="true"></i>
             </a>
         </li>
@@ -478,7 +478,7 @@
         
         <li class="post-action">
             
-                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
             
                 <i class="fa fa-list" aria-hidden="true"></i>
             </a>
