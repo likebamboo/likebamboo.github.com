@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>快速跳转到QQ和百度</title>
+    <title>测试</title>
     <style>
         * {
             margin: 0;
@@ -76,7 +76,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             width: 240px;
-            height: 140px; /* 降低按钮高度 */
+            height: 80px; /* 降低按钮高度 */
             position: relative;
             overflow: hidden;
         }
@@ -178,7 +178,7 @@
             .btn {
                 width: 100%;
                 max-width: 280px;
-                height: 130px; /* 移动端也降低高度 */
+                height: 80px; /* 移动端也降低高度 */
             }
         }
         
@@ -207,6 +207,11 @@
         <h1><i class="fas fa-external-link-alt"></i>快速跳转</h1>
         
         <div class="buttons-container">
+            <a href="snssdk1128://user/detail/111186289832" target="_blank" class="btn btn-qq">
+                <i class="fab fa-qq"></i>
+                <span class="btn-text">scheme跳转到抖音</span>
+            </a >
+
             <a href="https://www.baidu.com" target="_blank" class="btn btn-baidu">
                 <i class="fab fa-baidu"></i>
                 <span class="btn-text">跳转到百度官网</span>
@@ -229,49 +234,6 @@
     </div>
     
     <script>
-        // 添加按钮点击动画效果
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                // 创建点击效果
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.cssText = `
-                    position: absolute;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.7);
-                    transform: scale(0);
-                    animation: ripple-animation 0.6s linear;
-                    width: ${size}px;
-                    height: ${size}px;
-                    top: ${y}px;
-                    left: ${x}px;
-                `;
-                
-                this.appendChild(ripple);
-                
-                // 动画结束后移除元素
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-        
-        // 添加键盘快捷键支持
-        document.addEventListener('keydown', function(e) {
-            // 按下Q键跳转到QQ
-            if (e.key === 'q' || e.key === 'Q') {
-                window.open('https://www.qq.com', '_blank');
-            }
-            // 按下B键跳转到百度
-            if (e.key === 'b' || e.key === 'B') {
-                window.open('https://www.baidu.com', '_blank');
-            }
-        });
-        
         // 页面加载完成后的动画
         window.addEventListener('load', function() {
             document.querySelector('.container').style.opacity = '0';
