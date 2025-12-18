@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码识别测试</title>
+</head>
+<body>
+    <h1>二维码识别功能测试</h1>
+    
+    <div>
+        <h2>粘贴二维码图片来识别</h2>
+        <p>按 Ctrl+V (或 Cmd+V on Mac) 来粘贴一个二维码图片</p>
+        <p id="result" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">等待粘贴...</p>
+        <canvas id="qrcodeCanvas" style="border: 1px solid #ccc; margin-top: 10px; display: none;"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script>
+        // 检查jsQR库是否加载
+        console.log('jsQR:', typeof jsQR);
+
+        function recognizeQRCode(imageData) {
+            const canvas = document.getElementById('qrcodeCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 将imageData绘制到canvas上
+            ctx.putImageData(imageData, 0, 0);
+            
+            // 使用jsQR识别二维码
+            const code = jsQR(imageData.data, imageData.width, imageData.height);
+            
+            const resultElement = document.getElementById('result');
+            
+            if (code) {
+                // 成功识别二维码
+                console.log('识别成功:', JSON.stringify(code));
+                resultElement.textContent = '识别结果: ' + code.data;
+                resultElement.style.color = 'green';
+            } else {
+                // 未能识别二维码
+                console.log('未能识别二维码');
+                resultElement.textContent = '未能识别二维码，请确保图片清晰并包含完整的二维码';
+                resultElement.style.color = 'red';
+            }
+        }
+
+        // 粘贴事件处理
+        document.addEventListener('paste', (e) => {
+            const items = e.clipboardData?.items;
+            if (!items) return;
+            
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].kind === 'file' && items[i].type.indexOf('image') !== -1) {
+                    e.preventDefault();
+                    const file = items[i].getAsFile();
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = new Image();
+                        img.onload = function() {
+                            const canvas = document.getElementById('qrcodeCanvas');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            canvas.style.display = 'block';
+                            
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0);
+                            
+                            // 获取图片数据并识别
+                            const imageData = ctx.getImageData(0, 0, img.width, img.height);
+                            recognizeQRCode(imageData);
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                    break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
