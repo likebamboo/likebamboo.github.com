@@ -69,21 +69,21 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            padding: 25px 40px;
+            padding: 18px 30px; /* 减小内边距以降低高度 */
             border-radius: 16px;
             font-size: 1.3rem;
             font-weight: 600;
             transition: all 0.3s ease;
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
             width: 240px;
-            height: 180px;
+            height: 140px; /* 降低按钮高度 */
             position: relative;
             overflow: hidden;
         }
         
         .btn i {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2.4rem; /* 缩小图标以适配较低的高度 */
+            margin-bottom: 12px;
         }
         
         .btn-text {
@@ -178,7 +178,7 @@
             .btn {
                 width: 100%;
                 max-width: 280px;
-                height: 160px;
+                height: 130px; /* 移动端也降低高度 */
             }
         }
         
@@ -192,36 +192,40 @@
             }
             
             .btn {
-                padding: 20px 30px;
-                font-size: 1.1rem;
+                padding: 14px 22px; /* 进一步减小小屏幕内边距 */
+                font-size: 1.05rem;
             }
-            
+
             .btn i {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-external-link-alt"></i> 快速跳转</h1>
-        <p class="description">点击下方按钮可以快速跳转到对应网站，您也可以通过底部查看具体的网址信息。</p >
+        <h1><i class="fas fa-external-link-alt"></i>快速跳转</h1>
         
         <div class="buttons-container">
+            <a href="https://www.baidu.com" target="_blank" class="btn btn-baidu">
+                <i class="fab fa-baidu"></i>
+                <span class="btn-text">跳转到百度官网</span>
+            </a >
+
             <a href="https://www.qq.com" target="_blank" class="btn btn-qq">
                 <i class="fab fa-qq"></i>
-                <span class="btn-text">跳转到QQ网站</span>
+                <span class="btn-text">跳转到腾讯</span>
             </a >
             
             <a href="baiduimsettings2://openwebview?url=https%3A%2F%2Flikebamboo.com%2Ftools%2Ftest.html" target="_blank" class="btn btn-baidu">
                 <i class="fab fa-baidu"></i>
-                <span class="btn-text">在百度输入法中打开</span>
+                <span class="btn-text">在输入法中打开当前页面</span>
             </a >
         </div>
     </div>
     
     <div class="footer">
-        <p>© 2023 快速跳转页面 | 使用HTML5 & CSS3构建</p >
+        <p>© 2025</p >
     </div>
     
     <script>
