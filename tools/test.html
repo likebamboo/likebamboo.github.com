@@ -35,10 +35,10 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        h1 {
+        h3 {
             color: #2d3748;
             margin-bottom: 10px;
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             background: linear-gradient(to right, #1e90ff, #00b894);
             -webkit-background-clip: text;
             background-clip: text;
@@ -100,15 +100,6 @@
             color: white;
         }
         
-        .btn:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .btn:active {
-            transform: translateY(-5px);
-        }
-        
         .btn::after {
             content: '';
             position: absolute;
@@ -119,10 +110,6 @@
             background: rgba(255, 255, 255, 0.1);
             opacity: 0;
             transition: opacity 0.3s;
-        }
-        
-        .btn:hover::after {
-            opacity: 1;
         }
         
         .url-display {
@@ -204,24 +191,29 @@
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-external-link-alt"></i>快速跳转</h1>
+        <h3><i class="fas fa-external-link-alt"></i>快速跳转</h3>
         
         <div class="buttons-container">
             <a href="snssdk1128://user/detail/111186289832" target="_blank" class="btn btn-qq">
                 <i class="fab fa-qq"></i>
-                <span class="btn-text">scheme跳转到抖音</span>
+                <span class="btn-text">scheme跳转到抖音app</span>
             </a >
 
+            <a href="https://www.qq.com" target="_blank" class="btn btn-qq">
+                <i class="fab fa-qq"></i>
+                <span class="btn-text">跳转到腾讯网</span>
+            </a >
+            
             <a href="https://www.baidu.com" target="_blank" class="btn btn-baidu">
                 <i class="fab fa-baidu"></i>
                 <span class="btn-text">跳转到百度官网</span>
             </a >
 
-            <a href="https://www.qq.com" target="_blank" class="btn btn-qq">
+            <a href="baiduimsettings2://superskinV9?parameters=%7B%22tab%22%3A%222%22%2C%22skinToken%22%3A%22%22%2C%22atoken%22%3A%229ae844224bc5c0e261c1da735b56f0e6%22%2C%22supportVersion%22%3A%229.0.0.50%22%2C%22autoApply%22%3A%22true%22%2C%22skID%22%3A%229294%22%7D" target="_blank" class="btn btn-qq">
                 <i class="fab fa-qq"></i>
-                <span class="btn-text">跳转到腾讯</span>
+                <span class="btn-text">scheme跳转到皮肤详情</span>
             </a >
-            
+
             <a href="baiduimsettings2://openwebview?url=https%3A%2F%2Flikebamboo.com%2Ftools%2Ftest.html" target="_blank" class="btn btn-baidu">
                 <i class="fab fa-baidu"></i>
                 <span class="btn-text">在输入法中打开当前页面</span>
