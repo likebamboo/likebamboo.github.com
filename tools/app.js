@@ -392,19 +392,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // 处理二维码结果复制
-        if (e.target.closest('#qrcodeResult .result-content div[data-copy]')) {
-            const div = e.target.closest('div[data-copy]');
-            navigator.clipboard.writeText(div.dataset.copy).then(() => {
-                const original = div.innerHTML;
-                div.innerHTML = original + '<span style="color: #10b981; margin-left: 8px; font-size: 0.9rem;">✓</span>';
-                setTimeout(() => {
-                    div.innerHTML = original;
-                }, 1000);
-            });
-            return;
-        }
-
         // 处理其他结果复制
         const card = e.target.closest('.result-card');
         if (card) {
@@ -426,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 初始化时根据hash切换标签页
     if (window.location.hash) {
         const tabName = window.location.hash.substring(1);
-        if (['timestamp', 'url', 'base64', 'color', 'base', 'qrcode'].includes(tabName)) {
+        if (['timestamp', 'url', 'base64', 'color', 'base'].includes(tabName)) {
             switchTab(tabName, true);
         }
     }
@@ -434,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 监听hash变化
     window.addEventListener('hashchange', function () {
         const tabName = window.location.hash.substring(1);
-        if (['timestamp', 'url', 'base64', 'color', 'base', 'qrcode'].includes(tabName)) {
+        if (['timestamp', 'url', 'base64', 'color', 'base'].includes(tabName)) {
             switchTab(tabName, true);
         }
     });
@@ -503,68 +490,6 @@ document.addEventListener('DOMContentLoaded', function () {
             convertColorFromSwatch(color);
         }
     };
-
-    // 二维码功能初始化
-    const qrcodePasteArea = document.getElementById('qrcodePasteArea');
-    const qrcodeInput = document.getElementById('qrcodeInput');
-    
-    if (qrcodePasteArea && qrcodeInput) {
-        // 点击粘贴区域打开文件选择
-        qrcodePasteArea.addEventListener('click', () => {
-            qrcodeInput.click();
-        });
-        
-        // 文件选择处理
-        qrcodeInput.addEventListener('change', (e) => {
-            if (e.target.files && e.target.files[0]) {
-                handleQRCodeImage(e.target.files[0]);
-            }
-        });
-        
-        // 粘贴事件处理
-        document.addEventListener('paste', (e) => {
-            // 只在二维码标签页时处理粘贴
-            if (!document.getElementById('qrcode-panel').classList.contains('active')) {
-                return;
-            }
-            
-            const items = e.clipboardData?.items;
-            if (!items) return;
-            
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].kind === 'file' && items[i].type.indexOf('image') !== -1) {
-                    e.preventDefault();
-                    const file = items[i].getAsFile();
-                    handleQRCodeImage(file);
-                    break;
-                }
-            }
-        });
-        
-        // 拖拽上传
-        qrcodePasteArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            qrcodePasteArea.classList.add('dragover');
-        });
-        
-        qrcodePasteArea.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            qrcodePasteArea.classList.remove('dragover');
-        });
-        
-        qrcodePasteArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            qrcodePasteArea.classList.remove('dragover');
-            
-            const files = e.dataTransfer?.files;
-            if (files && files[0]) {
-                handleQRCodeImage(files[0]);
-            }
-        });
-    }
 });
 
 // 从调色板转换颜色
@@ -810,71 +735,4 @@ function hslToRgb(h, s, l) {
         g: Math.round(g * 255),
         b: Math.round(b * 255)
     };
-}
-
-// 页面加载时初始化二维码功能
-function recognizeQRCode(imageData) {
-    const canvas = document.getElementById('qrcodeCanvas');
-    const ctx = canvas.getContext('2d');
-    
-    // 将imageData绘制到canvas上
-    ctx.putImageData(imageData, 0, 0);
-    
-    // 使用jsQR识别二维码
-    const code = jsQR(imageData.data, imageData.width, imageData.height, {
-        inversionAttempts: 'dontInvert'
-    });
-    
-    const resultContent = document.querySelector('#qrcodeResult .result-content');
-    
-    if (code) {
-        // 成功识别二维码
-        resultContent.innerHTML = `<div data-copy="${code.data}" style="word-break: break-word; white-space: pre-wrap;">${escapeHtml(code.data)}</div>`;
-    } else {
-        // 未能识别二维码
-        resultContent.innerHTML = '<span style="color: #ef4444;">未能识别二维码，请确保图片清晰并包含完整的二维码</span>';
-    }
-}
-
-// HTML转义函数
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-// 处理粘贴的图片
-function handleQRCodeImage(file) {
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        const img = new Image();
-        
-        img.onload = function() {
-            // 显示预览
-            const canvas = document.getElementById('qrcodeCanvas');
-            const preview = document.getElementById('qrcodePreview');
-            
-            canvas.width = img.width;
-            canvas.height = img.height;
-            
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            
-            preview.style.display = 'block';
-            
-            // 获取图片数据并识别
-            const imageData = ctx.getImageData(0, 0, img.width, img.height);
-            recognizeQRCode(imageData);
-        };
-        
-        img.onerror = function() {
-            const resultContent = document.querySelector('#qrcodeResult .result-content');
-            resultContent.innerHTML = '<span style="color: #ef4444;">图片加载失败，请尝试另一张图片</span>';
-        };
-        
-        img.src = e.target.result;
-    };
-    
-    reader.readAsDataURL(file);
 }
