@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://www.likebamboo.com/all-archives/index.html</loc>
+    <loc>https://www.likebamboo.com/all-categories/index.html</loc>
     
     <lastmod>2025-10-29</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://www.likebamboo.com/all-categories/index.html</loc>
+    <loc>https://www.likebamboo.com/all-archives/index.html</loc>
     
     <lastmod>2025-10-29</lastmod>
     
@@ -65,15 +65,6 @@
   </url>
   
   <url>
-    <loc>https://www.likebamboo.com/2018/03/01/gradle-plugin/</loc>
-    
-    <lastmod>2025-10-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.likebamboo.com/2019/12/31/book-list-2019/</loc>
     
     <lastmod>2025-10-29</lastmod>
@@ -83,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://www.likebamboo.com/2018/12/31/book-list-2018/</loc>
+    <loc>https://www.likebamboo.com/2018/03/01/gradle-plugin/</loc>
     
     <lastmod>2025-10-29</lastmod>
     
@@ -93,6 +84,15 @@
   
   <url>
     <loc>https://www.likebamboo.com/2017/08/08/android-wifi-hook/</loc>
+    
+    <lastmod>2025-10-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.likebamboo.com/2018/12/31/book-list-2018/</loc>
     
     <lastmod>2025-10-29</lastmod>
     
@@ -180,6 +180,13 @@
   </url>
   
   <url>
+    <loc>https://www.likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://www.likebamboo.com/tags/android/</loc>
     <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -188,13 +195,6 @@
   
   <url>
     <loc>https://www.likebamboo.com/tags/%E4%B8%BB%E9%A2%98%E5%88%87%E6%8D%A2/</loc>
-    <lastmod>2025-12-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.likebamboo.com/tags/%E8%AF%BB%E4%B9%A6/</loc>
     <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -215,20 +215,6 @@
   </url>
   
   <url>
-    <loc>https://www.likebamboo.com/tags/%E6%8E%A7%E4%BB%B6/</loc>
-    <lastmod>2025-12-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.likebamboo.com/tags/%E5%9B%BE%E7%89%87/</loc>
-    <lastmod>2025-12-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.likebamboo.com/tags/gradle/</loc>
     <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -237,6 +223,20 @@
   
   <url>
     <loc>https://www.likebamboo.com/tags/%E6%8F%92%E4%BB%B6/</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.likebamboo.com/tags/%E6%8E%A7%E4%BB%B6/</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.likebamboo.com/tags/%E5%9B%BE%E7%89%87/</loc>
     <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

@@ -311,33 +311,6 @@
             background: linear-gradient(45deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
         }
 
-        .qrcode-paste-area {
-            border: 2px dashed #cbd5e1;
-            border-radius: 10px;
-            padding: 3rem 2rem;
-            text-align: center;
-            background: #f8fafc;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .qrcode-paste-area:hover {
-            border-color: #6366f1;
-            background: #f0f4ff;
-        }
-
-        .qrcode-paste-area.dragover {
-            border-color: #6366f1;
-            background: #e0e7ff;
-        }
-
-        .qrcode-paste-area p {
-            margin: 0;
-            color: #64748b;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
         @media (max-width: 768px) {
             .tabs-container {
                 padding: 1rem;
@@ -385,7 +358,6 @@
             <button class="tab-btn" onclick="switchTab('base64')">Base64编解码</button>
             <button class="tab-btn" onclick="switchTab('color')">颜色转换</button>
             <button class="tab-btn" onclick="switchTab('base')">进制转换</button>
-            <button class="tab-btn" onclick="switchTab('qrcode')">二维码识别</button>
         </div>
 
         <div class="tab-content">
@@ -552,35 +524,9 @@
                     </div>
                 </div>
             </div>
-
-            <!-- 二维码识别 -->
-            <div id="qrcode-panel" class="tab-panel">
-                <div class="form-group">
-                    <label class="form-label">粘贴二维码图片</label>
-                    <div class="qrcode-paste-area" id="qrcodePasteArea">
-                        <p>在此粘贴二维码图片或点击上传</p>
-                        <input type="file" id="qrcodeInput" class="qrcode-file-input" accept="image/*" style="display: none;">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">二维码预览</label>
-                    <div id="qrcodePreview" style="display: none; margin-bottom: 1rem;">
-                        <canvas id="qrcodeCanvas" style="border-radius: 10px; border: 2px solid #e5e7eb; max-width: 100%; height: auto;"></canvas>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">识别结果</label>
-                    <div class="result-card copy-hint" id="qrcodeResult">
-                        <div class="result-content">等待识别...</div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script src="app.js"></script>
 </body>
 
