@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,7 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
@@ -22,7 +23,7 @@
             padding: 20px;
             color: #333;
         }
-        
+
         .container {
             max-width: 800px;
             width: 100%;
@@ -34,7 +35,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         h3 {
             color: #2d3748;
             margin-bottom: 10px;
@@ -44,7 +45,7 @@
             background-clip: text;
             color: transparent;
         }
-        
+
         .description {
             color: #4a5568;
             font-size: 1.1rem;
@@ -54,52 +55,58 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         .buttons-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
+            flex-direction: column;
+            /* 垂直排列，按钮横向铺满 */
+            gap: 12px;
             margin-top: 20px;
+            align-items: stretch;
         }
-        
+
         .btn {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             text-decoration: none;
-            padding: 18px 30px; /* 减小内边距以降低高度 */
-            border-radius: 16px;
-            font-size: 1.3rem;
+            padding: 10px 14px;
+            /* 简洁、足够容下文字 */
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            width: 240px;
-            height: 80px; /* 降低按钮高度 */
+            transition: all 0.18s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+            width: 100%;
+            /* 横向铺满 */
+            height: auto;
+            /* 高度随内容 */
             position: relative;
             overflow: hidden;
         }
-        
+
         .btn i {
-            font-size: 2.4rem; /* 缩小图标以适配较低的高度 */
-            margin-bottom: 12px;
+            font-size: 1.4rem;
+            margin-right: 12px;
+            margin-bottom: 0;
         }
-        
+
         .btn-text {
-            margin-top: 10px;
+            margin-top: 0;
+            display: inline-block;
         }
-        
+
         .btn-qq {
             background: linear-gradient(to right, #12b7f5, #0d8ddc);
             color: white;
         }
-        
+
         .btn-baidu {
             background: linear-gradient(to right, #2932e1, #1a22b8);
             color: white;
         }
-        
+
         .btn::after {
             content: '';
             position: absolute;
@@ -111,7 +118,7 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-        
+
         .url-display {
             margin-top: 40px;
             padding: 20px;
@@ -119,12 +126,12 @@
             border-radius: 12px;
             border-left: 5px solid #4CAF50;
         }
-        
+
         .url-display h3 {
             margin-bottom: 15px;
             color: #2d3748;
         }
-        
+
         .url {
             font-family: monospace;
             background-color: #edf2f7;
@@ -134,53 +141,54 @@
             font-size: 1rem;
             word-break: break-all;
         }
-        
+
         .hint {
             margin-top: 30px;
             color: #718096;
             font-size: 0.95rem;
             font-style: italic;
         }
-        
+
         .footer {
             margin-top: 40px;
             color: #718096;
             font-size: 0.9rem;
         }
-        
+
         /* 响应式设计 */
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
             }
-            
+
             h1 {
                 font-size: 2rem;
             }
-            
+
             .buttons-container {
                 gap: 20px;
             }
-            
+
             .btn {
                 width: 100%;
-                max-width: 280px;
-                height: 80px; /* 移动端也降低高度 */
+                max-width: none;
+                height: auto;
             }
         }
-        
+
         @media (max-width: 480px) {
             h1 {
                 font-size: 1.8rem;
             }
-            
+
             .description {
                 font-size: 1rem;
             }
-            
+
             .btn {
-                padding: 14px 22px; /* 进一步减小小屏幕内边距 */
-                font-size: 1.05rem;
+                padding: 10px 14px;
+                /* 进一步减小小屏幕内边距 */
+                font-size: 0.95rem;
             }
 
             .btn i {
@@ -189,54 +197,107 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h3><i class="fas fa-external-link-alt"></i>快速跳转</h3>
-        
+
         <div class="buttons-container">
             <a href="snssdk1128://user/detail/111186289832" target="_blank" class="btn btn-qq">
                 <i class="fab fa-qq"></i>
                 <span class="btn-text">scheme跳转到抖音app</span>
-            </a >
+            </a>
 
             <a href="https://www.qq.com" target="_blank" class="btn btn-qq">
                 <i class="fab fa-qq"></i>
                 <span class="btn-text">跳转到腾讯网</span>
-            </a >
-            
+            </a>
+
             <a href="https://www.baidu.com" target="_blank" class="btn btn-baidu">
                 <i class="fab fa-baidu"></i>
                 <span class="btn-text">跳转到百度官网</span>
-            </a >
+            </a>
 
-            <a href="baiduimsettings2://superskinV9?parameters=%7B%22tab%22%3A%222%22%2C%22skinToken%22%3A%22%22%2C%22atoken%22%3A%229ae844224bc5c0e261c1da735b56f0e6%22%2C%22supportVersion%22%3A%229.0.0.50%22%2C%22autoApply%22%3A%22true%22%2C%22skID%22%3A%229294%22%7D" target="_blank" class="btn btn-qq">
+            <a href="baiduimsettings2://superskinV9?parameters=%7B%22tab%22%3A%222%22%2C%22skinToken%22%3A%22%22%2C%22atoken%22%3A%229ae844224bc5c0e261c1da735b56f0e6%22%2C%22supportVersion%22%3A%229.0.0.50%22%2C%22autoApply%22%3A%22true%22%2C%22skID%22%3A%229294%22%7D"
+                target="_blank" class="btn btn-qq">
                 <i class="fab fa-qq"></i>
                 <span class="btn-text">scheme跳转到皮肤详情</span>
-            </a >
+            </a>
 
-            <a href="baiduimsettings2://openwebview?url=https%3A%2F%2Flikebamboo.com%2Ftools%2Ftest.html" target="_blank" class="btn btn-baidu">
+            <a href="baiduimsettings2://openwebview?url=https%3A%2F%2Flikebamboo.com%2Ftools%2Ftest.html"
+                target="_blank" class="btn btn-baidu">
                 <i class="fab fa-baidu"></i>
-                <span class="btn-text">在输入法中打开当前页面</span>
-            </a >
+                <span class="btn-text">在输入法（主线）中打开当前页面</span>
+            </a>
+
+            <a href="baiduinputoem://openwebview?url=https%3A%2F%2Flikebamboo.com%2Ftools%2Ftest.html" target="_blank"
+                class="btn btn-baidu">
+                <i class="fab fa-baidu"></i>
+                <span class="btn-text">在输入法（OEM）中打开当前页面</span>
+            </a>
+
+            <!-- 新增：触发内置 scheme 的按钮 -->
+            <a href="#" id="btn-open-inner-scheme" class="btn btn-qq">
+                <i class="fas fa-bolt"></i>
+                <span class="btn-text">openInnerScheme</span>
+            </a>
         </div>
     </div>
-    
+
     <div class="footer">
-        <p>© 2025</p >
+        <p>© 2025</p>
     </div>
-    
+
     <script>
         // 页面加载完成后的动画
-        window.addEventListener('load', function() {
-            document.querySelector('.container').style.opacity = '0';
-            document.querySelector('.container').style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                document.querySelector('.container').style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                document.querySelector('.container').style.opacity = '1';
-                document.querySelector('.container').style.transform = 'translateY(0)';
-            }, 100);
+        window.addEventListener('load', function () {
+            var container = document.querySelector('.container');
+            if (container) {
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(20px)';
+
+                setTimeout(function () {
+                    container.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                }, 100);
+            }
+
+            // 替换 openwebview 链接的 url 参数为当前页面 URL（自动编码）
+            var current = encodeURIComponent(window.location.href);
+            document.querySelectorAll('a').forEach(function (a) {
+                var href = a.getAttribute('href') || '';
+                if (href.indexOf('openwebview?url=') !== -1) {
+                    var parts = href.split('openwebview?url=');
+                    var prefix = parts[0] + 'openwebview?url=';
+                    a.setAttribute('href', prefix + current);
+                }
+            });
+
+            // 新增：触发内置 scheme 的按钮事件（发送给 baiduInputJSBridge）
+            var btn = document.getElementById('btn-open-inner-scheme');
+            if (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var jsonObj = { url: 'openpackage?url=' + encodeURIComponent('market://details?id=com.tencent.mm') };
+
+                    if (window.baiduInputJSBridge && typeof window.baiduInputJSBridge.on === 'function') {
+                        try {
+                            window.baiduInputJSBridge.on('openInnerScheme', jsonObj, function (response) {
+                            });
+                            console.log('Called baiduInputJSBridge.on openInnerScheme', JSON.stringify(jsonObj));
+                        } catch (err) {
+                            console.error('Error calling baiduInputJSBridge.on:', err);
+                        }
+                    } else {
+                        console.warn('baiduInputJSBridge.on is not available in this environment.', jsonObj);
+                        // 可选：在非环境下展示提示
+                        // alert('Bridge not available');
+                    }
+                });
+            }
         });
     </script>
 </body>
+
 </html>
